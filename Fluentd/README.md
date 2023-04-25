@@ -37,3 +37,12 @@ sudo systemctl stop td-agent.service
 sudo /opt/td-agent/bin/fluentd -c /home/user/elastic/idemia_plain.conf
 # Coller à nouveau les données dans le fichier de data et enregistrer
 
+# TP 2 :
+# Télécharger le fichier suivant : https://raw.githubusercontent.com/vincent2mots/elk/main/data/log_watchlist-service-DK.log
+# Positionner le fichier dans /home/user/elastic/data
+# Télécharger le fichier suivant : https://raw.githubusercontent.com/vincent2mots/elk/main/Fluentd/idemia_plain.conf
+# Positionner le fichier dans le répertoire /home/user/elastic
+# /!\ Ouvrir le fichier data, couper le contenu et enregistrer avant de lancer Fluentd
+# Lancer Fluentd :
+sudo /opt/td-agent/bin/fluentd -c /home/user/elastic/idemia_plain.conf
+# Coller à nouveau les données dans le fichier de data et enregistrer
