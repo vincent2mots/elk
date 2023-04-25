@@ -1,48 +1,59 @@
-# Version quelle version d'Ubuntu est installée : 
-lsb_release -a
 
-# Installer curl (si nécessaire) 
-sudo apt install curl
+## Prérequis
+**Version quelle version d'Ubuntu est installée :**
+>lsb_release -a
 
-# Documentation d'installation : 
-# https://docs.fluentd.org/installation/install-by-deb
+**Installer curl (si nécessaire) :**
+>sudo apt install curl
 
-# Installation sur Ubuntu Focal :
-curl -fsSL https://toolbelt.treasuredata.com/sh/install-ubuntu-focal-td-agent4.sh | sh
+## Documentation d'installation :
 
-# Le service est installé ici : 
-/lib/systemd/system/td-agent.service
+[Documentation d'installation de Fluentd](https://docs.fluentd.org/installation/install-by-deb)
 
-# Démarrer Fluentd : 
-sudo systemctl start td-agent.service
+## Installation sur Ubuntu Focal :
 
-# Stopper Fluentd : 
-sudo systemctl stop td-agent.service
+>curl -fsSL https://toolbelt.treasuredata.com/sh/install-ubuntu-focal-td-agent4.sh | sh
 
-# Les chemins importants :
- # Fichiers de configuration : 
- /etc/td-agent
- # Le fichier par défaut est /etc/td-agent/td-agent.conf
+### Le service est installé ici :
 
- # Exécutable td-agent :
- /opt/td-agent/bin
+>more /lib/systemd/system/td-agent.service
 
-# TP 1 :
-# Télécharger le fichier suivant : https://raw.githubusercontent.com/vincent2mots/elk/main/data/log_watchlist-service-DK.log
-# Positionner le fichier dans /home/user/elastic/data
-# Télécharger le fichier suivant : https://raw.githubusercontent.com/vincent2mots/elk/main/Fluentd/idemia_plain.conf
-# Positionner le fichier dans le répertoire /home/user/elastic
-# /!\ Ouvrir le fichier data, couper le contenu et enregistrer avant de lancer Fluentd
-# Lancer Fluentd :
-sudo /opt/td-agent/bin/fluentd -c /home/user/elastic/idemia_plain.conf
-# Coller à nouveau les données dans le fichier de data et enregistrer
+### Démarrer Fluentd :
 
-# TP 2 :
-# Télécharger le fichier suivant : https://raw.githubusercontent.com/vincent2mots/elk/main/data/log_watchlist-service-DK.log
-# Positionner le fichier dans /home/user/elastic/data
-# Télécharger le fichier suivant : https://raw.githubusercontent.com/vincent2mots/elk/main/Fluentd/idemia_plain.conf
-# Positionner le fichier dans le répertoire /home/user/elastic
-# /!\ Ouvrir le fichier data, couper le contenu et enregistrer avant de lancer Fluentd
-# Lancer Fluentd :
-sudo /opt/td-agent/bin/fluentd -c /home/user/elastic/idemia_plain.conf
-# Coller à nouveau les données dans le fichier de data et enregistrer
+>sudo systemctl start td-agent.service
+
+### Stopper Fluentd :
+
+>sudo systemctl stop td-agent.service
+
+### Les chemins importants :
+
+#### Fichiers de configuration :
+
+>/etc/td-agent
+
+Le fichier par défaut est **/etc/td-agent/td-agent.conf**
+
+#### Exécutable td-agent :
+Il se trouve à l'emplacement suivant :
+>/opt/td-agent/bin
+
+## TP 1 : Intégration d'un fichier de log classique
+1. Télécharger le fichier suivant : [Fichier de log de formation](https://raw.githubusercontent.com/vincent2mots/elk/main/data/log_watchlist-service-DK.log)
+2. Positionner le fichier dans **/home/user/elastic/data**
+3. Télécharger le fichier suivant : [Fichier de configuration](https://raw.githubusercontent.com/vincent2mots/elk/main/Fluentd/idemia_plain.conf)
+4. Positionner le fichier dans le répertoire **/home/user/elastic**
+5. **/!\\** **Ouvrir le fichier data, couper le contenu et enregistrer avant de lancer Fluentd**
+6. Lancer Fluentd :
+>sudo /opt/td-agent/bin/fluentd -c /home/user/elastic/idemia_plain.conf
+7. Coller à nouveau les données dans le fichier de data et enregistrer
+
+## TP 2 : Intégration d'un fichier de log au format JSON
+1. Télécharger le fichier suivant : [Fichier de log JSON](https://raw.githubusercontent.com/vincent2mots/elk/main/data/em.log.test)
+2. Positionner le fichier dans **/home/user/elastic/data**
+3. Télécharger le fichier suivant : [Fichier de configuration JSON](https://raw.githubusercontent.com/vincent2mots/elk/main/Fluentd/fluent_json.conf)
+4. Positionner le fichier dans le répertoire **/home/user/elastic**
+5. **/!\\** **Ouvrir le fichier data, couper le contenu et enregistrer avant de lancer Fluentd**
+6. Lancer Fluentd :
+>sudo /opt/td-agent/bin/fluentd -c /home/user/elastic/fluent_json.conf
+7. Coller à nouveau les données dans le fichier de data et enregistrer
