@@ -1,7 +1,9 @@
 
 ## Prérequis
 **Version quelle version d'Ubuntu est installée :**
->lsb_release -a
+``` sh
+lsb_release -a
+```
 
 **Installer curl (si nécessaire) :**
 >sudo apt install curl
