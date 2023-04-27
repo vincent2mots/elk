@@ -1,0 +1,643 @@
+###########################################################################
+# Pour récupérer la version d'Elasticsearch (7.6.2)
+GET /
+
+# Pour obtenir la liste des noeuds du cluster
+GET /_nodes
+
+# Pour obtenir la liste des index
+GET /_cat/indices?v
+
+# Pour filtrer les index
+GET /_cat/indices/kiba*?v
+
+# Pour voir les shards
+GET /_cat/shards/kiba*?v
+
+# Cas d'une recherche très simple
+GET /kibana_sample_data_ecommerce/_search
+###########################################################################
+
+###########################################################################
+DELETE /library # Utile si l'index library existe déjà auparavant
+
+PUT /library
+ {
+  "settings": {
+  "index.number_of_shards": 1,
+  "index.number_of_replicas": 0
+ }
+}
+
+# When you need to index a lot of docs, you should use the bulk API
+POST /library/_bulk
+{ "index": { "_id": 1 }}
+{ "title": "The quick brown fox", "price": 5, "colors": ["red", "green", "blue"] }
+{ "index": { "_id": 2 }}
+{ "title": "The quick brown fox jumps over the lazy dog", "price": 15, "colors": ["blue", "yellow"] }
+{ "index": { "_id": 3 }}
+{ "title": "The quick brown fox jumps over the quick dog", "price": 8, "colors": ["red", "blue"] }
+{ "index": { "_id": 4 }}
+{ "title": "Brown fox brown dog", "price": 2, "colors": ["black", "yellow", "red", "blue"] }
+{ "index": { "_id": 5 }}
+{ "title": "Lazy dog", "price": 9, "colors": ["red", "blue", "green"] }
+
+
+# Tester les fonctions de recherche dans l'index library
+# Obtenir les informations sur l'index :
+GET /library/_settings
+
+# Chercher tous les documents 
+# SQL : select * from library
+GET /library/_search
+
+# Chercher tous les documents qui contiennent le mot "fox"
+# SQL : select * from library where title like '%fox%'
+GET /library/_search
+{
+  "query": {
+    "match": {
+      "title": "fox"
+    }
+  }
+}
+
+ # Essayons en cherchant "quick" et "dog" (Type match) : https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html 
+ GET /library/_search
+ {
+  "query": {
+    "match": {
+      "title": "quick dog"
+    }
+  }
+ }
+ 
+ # Utilisation de match_phrase : on cherche exactement "quick dog"
+ GET /library/_search
+ {
+  "query": {
+    "match_phrase": {
+      "title": "quick dog"
+    }
+  }
+ }
+ 
+ # Les résultats sont retournés triés par pertinence
+ GET /library/_search
+ {
+  "query": {
+    "match": {
+      "title": "quick"
+    }
+  }
+ }
+ 
+ # Recherche avec des caractères spéciaux 
+GET /library/_search
+ {
+  "query": {
+    "wildcard": {
+      "title": {
+        "value": "*ump*"
+      }
+    }
+  }
+ }
+ 
+ # Recherche floue "fuzzy"
+ # max_expansions à 50 par défaut : le nombre de permutations maximal
+ GET /library/_search
+ {
+   "query": {
+     "fuzzy": {
+       "title": {
+         "value": "box" 
+       }
+     }
+   }
+ } 
+ 
+ # More info: https://www.elastic.co/guide/en/elasticsearch/guide/current/relevance-intro.html
+ 
+ # Il est également possible de faire des combinaisons de requêtes
+ # Chercher les documents avec "quick" et exactement "lazy dog"
+ GET /library/_search
+ {
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "title": "quick"
+          }
+        },
+        {
+          "match_phrase": {
+            "title": "lazy dog"
+          }
+        }
+      ]
+    }
+  }
+ }
+ 
+ # Ou pour prendre l'inverse d'une requête
+ GET /library/_search
+ {
+  "query": {
+    "bool": {
+      "must_not": [
+        {
+          "match": {
+            "title": "lazy"
+          }
+        },
+        {
+          "match_phrase": {
+            "title": "quick dog"
+          }
+        }
+      ]
+    }
+  }
+ } 
+ 
+ # Les combinatoires peuvent être boostées :
+ # Ici, on accorde 3 fois plus d'importance à "lazy dog" qu'à "quick dog"
+ GET /library/_search
+ {
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "match_phrase": {
+            "title": {
+              "query": "quick dog"
+            }
+          }
+        },
+        {
+          "match_phrase": {
+            "title": {
+              "query": "lazy dog" ,
+              "boost": 3
+            }
+          }
+        }
+      ]
+    }
+  }
+ }  
+ 
+ # Sometimes it's unclear what acually matched.
+ # We can highlight the matching fragments:
+GET /library/_search
+ {
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "match_phrase": {
+            "title": {
+              "query": "quick dog",
+              "boost": 2
+            }
+          }
+        },
+        {
+          "match_phrase": {
+            "title": {
+              "query": "lazy dog"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "highlight": {
+    "fields": {
+      "title": {}
+    }
+  }
+ }
+ 
+ # Finally, we can perform filtering
+ # Filtering is often faster than querying
+ GET /library/_search
+ {
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "title": "dog"
+          }
+        }
+      ],
+      "filter": {
+          "range": {
+            "price": {
+              "gte": 5,
+              "lte": 10
+          }
+        }
+      }
+    }
+  }
+ } 
+ 
+ # Filtering can also be applied without a query
+ # Find all books costing >$5
+ GET /library/_search
+ {
+  "query": {
+    "bool": {
+      "filter": {
+        "range": {
+          "price": {
+            "gt": 5
+          }
+        }
+      }
+    }
+  }
+ }
+ 
+ # More info: https://www.elastic.co/guide/en/elasticsearch/guide/current/structured-search.html
+ 
+ #----------------------------------------------------------------------------------------------------------------#
+ 
+ # Now, how did that work? We need to understand
+ # _analysis_
+ 
+ # Analysis = tokeinzation + token filters
+ 
+ # Tokenization breaks sentences into discrete tokens
+ GET /library/_analyze
+ {
+  "tokenizer": "standard",
+  "text": "Brown fox brown dog"
+ }
+ 
+ # And filters manipulate those tokens
+ GET /library/_analyze
+ {
+  "tokenizer": "standard",
+  "filter": ["lowercase"],
+  "text": "Brown fox brown dog"
+ }
+
+ # There is a wide variety of filters.
+ GET /library/_analyze
+ {
+  "tokenizer": "standard",
+  "filter": ["lowercase", "unique"],
+  "text": "Brown brown brown fox brown dog"
+ }
+ 
+ # Did you notice the "Brown" vs "brown"?
+ 
+ #----------------------------------------------------------------------------------------------------------------#
+ # A Tokenizer + 0 or more token filters == analyzer
+ GET /library/_analyze
+ {
+  "analyzer": "standard",
+  "text": "Brown fox brown dog"
+ }
+ 
+ # Understanding analysis is very important, because the emitted tokens can change a lot!
+ GET /library/_analyze
+ {
+  "tokenizer": "standard",
+  "filter": ["lowercase"],
+  "text": "THE quick.brown_FOx Jumped! $19.95 @ 3.0"
+ }
+ 
+ GET /library/_analyze
+ {
+  "tokenizer": "letter",
+  "filter": ["lowercase"],
+  "text": "THE quick.brown_FOx Jumped! $19.95 @ 3.0"
+ }
+ 
+ # Another example with uax_url_email tokenizer
+ GET /library/_analyze
+ {
+  "tokenizer": "standard",
+  "text": "elastic@example.com website: https://www.elastic.co"
+ } 
+ 
+ GET /library/_analyze
+ {
+  "tokenizer": "uax_url_email",
+  "text": "elastic@example.com website: https://www.elastic.co"
+ }
+ 
+ # More info: https://www.elastic.co/guide/en/elasticsearch/guide/current/_controlling_analysis.html
+ 
+ #----------------------------------------------------------------------------------------------------------------#
+ # Aggregations can be used to explore your data
+ GET /library/_search
+ {
+  "size": 0,
+  "aggs": {
+    "popular-colors": {
+      "terms": {
+        "field": "colors.keyword"
+      }
+    }
+  }
+ }
+ 
+ # And you can search/aggregate at the same time
+ GET /library/_search
+ {
+  "query":{
+    "match": {
+      "title": "dog"
+    }
+  },
+  "aggs": {
+    "popular-colors": {
+      "terms": {
+        "field": "colors.keyword"
+      }
+    }
+  }
+ }
+ 
+ # Multiple aggregations can be calculated at once,
+ # and can be nested to further perform calculations
+ GET /library/_search
+ {
+  "size": 0,
+  "aggs": {
+    "price-statistics": {
+      "stats": {
+        "field": "price"
+      }
+    },
+    "popular-colors": {
+      "terms": {
+        "field": "colors.keyword"
+      },
+      "aggs": {
+        "avg-price-per-color": {
+          "avg": {
+            "field": "price"
+          }
+        }
+      }
+    }
+  }
+ } 
+ 
+ #----------------------------------------------------------------------------------------------------------------#
+ # Documents can be updated at any time by re-indexing them
+ POST /library/_doc/1
+ {
+  "title": "The quick brown fox",
+  "price": 10,
+  "colors" : ["red", "green", "blue"]
+ }
+ 
+ #----------------------------------------------------------------------------------------------------------------#
+ # Or by using the /_update API
+ POST /library/_update/1
+ {
+  "doc": {
+    "title" : "The quick fantastic fox"
+  }
+ }
+ 
+ GET /library/_doc/3
+ 
+ #----------------------------------------------------------------------------------------------------------------#
+ # Elasticsearch will dynamically define your schema
+ # when documents are indexed
+ 
+ GET /library/_mapping
+ 
+ # But you can also define it hen the index is created
+
+GET /famous-librarians/_mapping
+
+DELETE /famous-librarians
+
+ PUT /famous-librarians
+ {
+  "settings": {
+    "index": {
+      "number_of_shards": 2,
+      "number_of_replicas": 0,
+      "analysis": {
+        "analyzer": {
+          "my-desc-analyzer": {
+            "type": "custom",
+            "tokenizer": "uax_url_email",
+            "filters": ["lowercase"]
+          }
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties":{
+      "name":{
+        "type": "text"
+      },
+      "favorite-colors": {
+        "type": "keyword"
+      },
+      "birth_date": {
+        "type": "date",
+        "format": "year_month_day"
+      },
+      "hometown": {
+        "type": "geo_point"
+      },
+      "description":{
+        "type": "text",
+        "analyzer": "my-desc-analyzer"
+      }
+    }
+  }
+ } 
+ 
+  GET /famous-librarians/_doc/1
+ 
+ PUT /famous-librarians/_doc/1
+ {
+  "name": "Sarah Byrd Askew",
+  "favorite-colors": ["yellow", "light-grey"],
+  "birth-date": "1877-02-15",
+  "commentaire": "toto",
+  "hometown": {
+    "lat": 32.349722,
+    "lon": -87.641111
+  },
+  "description": "An American public librarian who pioneered the establishment of county libraries in the United States - https://en.wikipedia.org/wiki/Sarah_Byrd_Askew"
+ }
+ 
+ PUT /famous-librarians/_doc/2
+ {
+  "name": "John J. Beckley",
+  "favorite-colors": ["red", "off-white"],
+  "birth-date": "1757-08-07",
+  "hometown": {
+    "lat": 51.507222,
+    "lon": -0.1275
+  },
+  "description": "An american political campaign manager and the first Librarian of the United States Congress - https://en.wikipedia.org/wiki/John_J_Beckley"
+ }
+ 
+ GET /famous-librarians/_search
+ {
+   "query": {
+     "match": {
+       "description": "https://en.wikipedia.org/wiki/Sarah_Byrd_Askew"
+     }
+   }
+ }
+ 
+ 
+# Utilisation du tokenizer NGRAM :
+POST _analyze
+{
+  "tokenizer": "ngram",
+  "text": "Quick Fox"
+}
+
+# Exemple d'utilisation du tokenizer :
+PUT /books
+{
+"settings": {
+  "index": {
+    "number_of_shards": 2,
+    "number_of_replicas": 0,
+    "analysis": {
+      "analyzer": {
+        "my-subtring-analyzer": {
+          "type": "custom",
+          "tokenizer": "ngram",
+          "filters": ["lowercase"]
+        }
+      }
+    }
+  }
+},
+"mappings": {
+  "properties":{
+    "name":{
+      "type": "text",
+      "analyzer": "my-subtring-analyzer"
+    }
+  }
+}
+} 
+
+PUT /books/_doc/1
+ {
+  "name": "John J. Beckley"
+ }
+ 
+ 
+ GET /books/_search
+ {
+    "query": {
+     "match": {
+       "name": "John"
+     }
+   }
+ }
+
+GET /books/_search
+ {
+    "query": {
+     "match": {
+       "name": "beck"
+     }
+   }
+ }
+
+# Utilisation de l'API _sql :
+# Cette requête va retourner une erreur : en cause, le côté "imbriqué" des documents
+POST _sql?format=txt
+{
+ "query":"select * from kibana_sample_data_ecommerce"
+}
+
+# Pour voir le mapping :
+GET /kibana_sample_data_ecommerce/_mapping
+
+# Exemple de requête qui fonctionne :
+POST _sql?format=txt
+{
+ "query":"select customer_full_name,  customer_gender, taxless_total_price from kibana_sample_data_ecommerce"
+}
+
+# Requête avec calcul
+POST _sql?format=txt
+{
+ "query":"select customer_gender, sum(taxless_total_price) as CA_HT from kibana_sample_data_ecommerce group by customer_gender"
+}
+
+# Traduction d'une requête SQL en DSL
+POST _sql/translate
+{
+ "query":"select customer_gender, sum(taxless_total_price) as CA_HT from kibana_sample_data_ecommerce group by customer_gender"
+}
+
+# Test de la requête proposée par l'API SQL : 
+GET /kibana_sample_data_ecommerce/_search
+{
+  "size" : 0,
+  "_source" : false,
+  "stored_fields" : "_none_",
+  "aggregations" : {
+    "groupby" : {
+      "composite" : {
+        "size" : 1000,
+        "sources" : [
+          {
+            "3660f06f" : {
+              "terms" : {
+                "field" : "customer_gender",
+                "missing_bucket" : true,
+                "order" : "asc"
+              }
+            }
+          }
+        ]
+      },
+      "aggregations" : {
+        "494889cd" : {
+          "sum" : {
+            "field" : "taxless_total_price"
+          }
+        }
+      }
+    }
+  }
+}
+
+# Probablement comment on l'aurait écrit sans la traduction :
+GET /kibana_sample_data_ecommerce/_search?size=0
+{
+  "aggs": {
+    "GROUP_SEX":{
+      "terms": {
+        "field": "customer_gender",
+        "size": 2
+      },
+      "aggs": {
+        "CA_PAR_SEXE": {
+          "sum": {
+            "field": "taxless_total_price"
+          }
+        }
+      }
+    }
+  }
+}
+
