@@ -4,7 +4,13 @@ Pour gagner du temps lors de l'installation de la stack complète (avec les exer
 ``` sh
 cd /home/user
 wget https://raw.githubusercontent.com/vincent2mots/elk/main/Industrialisation/elk_formation_auto.sh -O /home/user/elk_formation_auto.sh
+```
+
+``` sh
 sudo chmod +x elk_formation_auto.sh
+```
+
+``` sh
 sudo ./elk_formation_auto.sh
 ```
 
