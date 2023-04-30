@@ -117,5 +117,40 @@ GET /library/_search
 }
 ```
 
+# Exercice 3 : Comprendre le mécanisme de l’élection du master
+**Objectifs pédagogiques :**
+>- Comprendre les rôles des noeuds (DILM)
+>- Comprendre le principe d’élection d’un nouveau noeud master
+>- Identifier un nombre minimal de noeuds dans une architecture Elasticsearch
+
+**Prérequis :**
+>- Avoir monté une architecture avec 2 noeuds Elasticsearch et 1 Kibana
+
+### **Q1 : Les rôles des noeuds**
+Exécuter l’appel API suivant :
+``` json
+GET _cat/nodes?v
+```
+
+Quels sont les rôles des noeuds ?
+
+Expliquer quels sont les rôles suivants :
+- D
+- I
+- L
+- M
+
+### **Q2 : Tuer le master**
+Identifier le noeud master et le tuer.
+
+Que se passe t-il ? Le cluster est-il toujours opérationnel ?
+
+Le second noeud a-t-il été élu master à la place du précédent ?
+
+Expliquer le mécanisme de l’élection.
+
+Qu’est ce que le quorum ?
+
+Combien de noeuds minimum aurait-il fallu dans cette architecture pour que cela fonctionne ?
 
 
