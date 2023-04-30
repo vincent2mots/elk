@@ -1,4 +1,4 @@
-## Exercice 1 : Premier cluster et test d'API
+# Exercice 1 : Premier cluster et test d'API
 
 **Objectifs pédagogiques**
 >- Tester plusieurs API et comprendre les résultats obtenus
@@ -39,7 +39,7 @@ Quelles sont les deux solutions pour résoudre ce problème ?
 
 ### Q4 : Expliquez les 3 niveaux de santé : **<span style="color:green">green</span>** / **<span style="color:yellow">yellow</span>** / **<span style="color:red">red</span>**. Dans quels cadres les retrouve-t-on ?
 
-## Exercice 2 : Comprendre le scoring dans Elasticsearch
+# Exercice 2 : Comprendre le scoring dans Elasticsearch
 **Objectifs pédagogiques :**
 >- Découvrir le langage naturel pour interroger Elasticsearch
 >- Découvrir quelques requêtes et en comprendre l’intérêt
