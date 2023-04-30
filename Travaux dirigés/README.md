@@ -20,7 +20,7 @@ GET _cat/shards?v
 ### **Q2 : Sur l’appel API *GET _cat/indices?v*, quelle est la différence entre les colonnes *store.size* et *pri.store.size* ?**
 
 ### **Q3 : Observez le niveau de santé de l’index kibana_sample_data_ecommerce, puis lancer la commande suivante**
-``` yml
+``` json
 PUT /kibana_sample_data_ecommerce/_settings
 {
  "index" : {
@@ -45,7 +45,7 @@ Quelles sont les deux solutions pour résoudre ce problème ?
 >- Découvrir quelques requêtes et en comprendre l’intérêt
 
 **Prérequis : Lancer les commandes suivantes :**
-``` yml
+``` json
 PUT /library
 {
  "settings": {
