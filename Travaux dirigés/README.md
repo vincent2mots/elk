@@ -67,47 +67,55 @@ POST /library/_bulk
 { "title": "Lazy dog", "price": 9, "colors": ["red", "blue", "green"] }
 ```
 
-Q1 : match ou match_phrase ?
+### **Q1 : match ou match_phrase ?**
 Lancer les deux requêtes suivantes et expliquer les différences :
+``` json
 GET /library/_search
 {
-"query": {
-"match": {
-"title": "quick dog"
+ "query": {
+  "match": {
+   "title": "quick dog"
+  }
+ }
 }
-}
-}
+
 GET /library/_search
 {
-"query": {
-"match_phrase": {
-"title": "quick dog"
+ "query": {
+  "match_phrase": {
+   "title": "quick dog"
+  }
+ }
 }
-}
-}
-Page 3 | 4
-Q2 : Le scoring
+```
+
+### **Q2 : Le scoring**
 Expliquer pourquoi les documents sont retournés dans cet ordre précis, lors de l’exécution de la requête suivante :
+``` json
 GET /library/_search
 {
-"query": {
-"match": {
-"title": "quick"
+ "query": {
+  "match": {
+   "title": "quick"
+  }
+ }
 }
-}
-}
-Q3 : La recherche floue
+```
+
+### **Q3 : La recherche floue**
 Expliquer ce que retourne la requête suivante. Trouvez quelques intérêts métier :
+``` json
 GET /library/_search
 {
-"query": {
-"fuzzy": {
-"title": {
-"value": "box"
+ "query": {
+  "fuzzy": {
+   "title": {
+    "value": "box"
+   }
+  }
+ }
 }
-}
-}
-}
+```
 
 
 
