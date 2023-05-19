@@ -15,3 +15,12 @@ sudo ./elk_formation_auto.sh
 ```
 
 Mot de passe du compte **user** : *user*
+
+Une fois le tout bien installé, se rendre sur l'URL suivante pour terminer la configuration :
+
+``` http
+https://localhost:9443
+```
+
+Compte : **admin**
+Mot de passe à créer : **Formation2023**
