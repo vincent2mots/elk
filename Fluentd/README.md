@@ -14,10 +14,10 @@ sudo apt install curl
 
 [Documentation d'installation de Fluentd](https://docs.fluentd.org/installation/install-by-deb)
 
-## Installation sur Ubuntu Focal :
+## Installation sur Ubuntu Jammy :
 
 ``` sh
-curl -fsSL https://toolbelt.treasuredata.com/sh/install-ubuntu-focal-td-agent4.sh | sh
+curl -fsSL https://toolbelt.treasuredata.com/sh/install-ubuntu-jammy-td-agent4.sh | sh
 ```
 
 ## TP 1 : Intégration d'un fichier de log classique
