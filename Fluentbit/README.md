@@ -20,7 +20,7 @@ sudo /opt/fluent-bit/bin/fluent-bit -c /home/user/elastic/fluent-bit_plain.conf
 6. Coller à nouveau les données dans le fichier de data et enregistrer
 
 ## TP 2 : Intégration d'un fichier de log au format JSON
-1. Télécharger le fichier suivant : [Fichier de configuration JSON](https://raw.githubusercontent.com/vincent2mots/elk/main/Fluentd/fluent_json.conf)
+1. Télécharger le fichier suivant : [Fichier de configuration JSON](https://raw.githubusercontent.com/vincent2mots/elk/main/Fluentbit/fluent-bit_json.conf)
 2. Positionner le fichier dans le répertoire **/home/user/elastic**
 3. Télécharger le fichier suivant : [Fichier de parsers custom](https://raw.githubusercontent.com/vincent2mots/elk/main/Fluentbit/parsers.conf) et le positionner dans le répertoire **/home/user/elastic**
 4. &#128161; **Ouvrir le fichier data, couper le contenu et enregistrer avant de lancer Fluentd**
