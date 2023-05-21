@@ -11,7 +11,7 @@ curl https://raw.githubusercontent.com/fluent/fluent-bit/master/install.sh | sh
 ## TP 1 : Intégration d'un fichier de log classique
 1. Télécharger le fichier suivant : [Fichier de configuration](https://raw.githubusercontent.com/vincent2mots/elk/main/Fluentbit/fluent-bit_plain.conf)
 2. Positionner le fichier dans le répertoire **/home/user/elastic**
-3. Télécharger le fichier suivant : [Fichier de configuration](https://raw.githubusercontent.com/vincent2mots/elk/main/Fluentbit/fluent-bit_plain.conf) et le positionner dans le répertoire **/home/user/elastic**
+3. Télécharger le fichier suivant : [Fichier de parsers custom](https://raw.githubusercontent.com/vincent2mots/elk/main/Fluentbit/parsers.conf) et le positionner dans le répertoire **/home/user/elastic**
 4. &#128161; **Ouvrir le fichier data, couper le contenu et enregistrer avant de lancer Fluentd**
 5. Lancer Fluent Bit :
 ``` sh
