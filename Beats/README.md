@@ -2,26 +2,31 @@
 ## Exercices agent Beats
 Le but de ces exercices est de comprendre comment utiliser des agents Beats et comprendre aussi l'intérêt des modules
 
-Pour tous les TP, se positionner dans le répertoire suivant :
-``` sh
-cd /home/user/elastic/logstash-8.4.0
-```
-
 ## TP 1 : Metricbeat
 Lancer les commandes suivantes :
 ``` sh
 cd /home/user/elastic/metricbeat-8.4.0-linux-x86_64
+```
+``` sh
 ./metricbeat modules enable linux
+```
+``` sh
 ./metricbeat setup
+```
+``` sh
 ./metricbeat -e
 ```
 Aller voir le dashboard suivant dans Kibana :
+![](
+https://raw.githubusercontent.com/vincent2mots/elk/main/Beats/images/overview_ecs.PNG)
 
 ## TP 2 : Filebeat
 ### 1. Filebeat sans module
 Lancer les commandes suivantes :
 ``` sh
 cd /home/user/elastic/filebeat-8.4.0-linux-x86_64
+```
+``` sh
 ./filebeat -e
 ```
 
