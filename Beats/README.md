@@ -20,6 +20,9 @@ Aller voir le dashboard suivant dans Kibana :
 ![](
 https://raw.githubusercontent.com/vincent2mots/elk/main/Beats/images/overview_ecs.PNG)
 
+ou à l'aide du lien suivant :
+[Lien vers le dashboard](http://localhost:5601/app/dashboards#/view/Metricbeat-system-overview-ecs?_g=())
+
 ## TP 2 : Filebeat
 ### 1. Filebeat sans module
 Lancer les commandes suivantes :
