@@ -4,12 +4,12 @@ Le but de ces exercices est de comprendre comment lancer des Pipeline, voir les 
 
 Le fichier de de donnée pour ces TP se trouve ici :
 ``` sh
-head -10 /home/user/elastic/data/apache.logs
+head -10 ~/elastic/data/apache.logs
 ```
 
 Pour tous les TP, se positionner dans le répertoire suivant :
 ``` sh
-cd /home/user/elastic/logstash-8.4.0
+cd ~/elastic/logstash-8.4.0
 ```
 
 ## TP 1 : Découverte d'une configuration Logstash
