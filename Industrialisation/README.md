@@ -25,9 +25,8 @@ sudo ./elk_formation_auto.sh sysadmin
 ## Configuration de Portainer :
 Une fois le tout bien installé, se rendre sur l'URL suivante pour terminer la configuration :
 
-``` http
-https://localhost:9443
-```
+[Lien vers Portainer](https://localhost:9443)
+
 
 Compte : **admin**
 Mot de passe à créer : **Formation2023**
