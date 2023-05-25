@@ -10,7 +10,7 @@
 # Variables
 # test
 #v_dir_source="/home/user"
-v_user=$1
+v_user=${USER}
 v_dir_source="/home/${v_user}"
 v_version="8.4.0"
 v_dir_elastic=${v_dir_source}/elastic
