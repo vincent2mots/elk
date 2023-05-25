@@ -5,7 +5,7 @@ Le but de ces exercices est de comprendre comment utiliser des agents Beats et c
 ## TP 1 : Metricbeat
 Lancer les commandes suivantes :
 ``` sh
-cd /home/user/elastic/metricbeat-8.4.0-linux-x86_64
+cd ~/elastic/metricbeat-8.4.0-linux-x86_64
 ```
 ``` sh
 ./metricbeat modules enable linux
@@ -27,7 +27,7 @@ ou à l'aide du lien suivant :
 ### 1. Filebeat sans module
 Lancer les commandes suivantes :
 ``` sh
-cd /home/user/elastic/filebeat-8.4.0-linux-x86_64
+cd ~/elastic/filebeat-8.4.0-linux-x86_64
 ```
 ``` sh
 ./filebeat -e
@@ -38,7 +38,7 @@ Aller voir les données Kibana. Qu'en pensez-vous?
 ### 2. Filebeat avec module
 Lancer les commandes suivantes :
 ``` sh
-cd /home/user/elastic/filebeat-8.4.0-linux-x86_64
+cd ~/elastic/filebeat-8.4.0-linux-x86_64
 ./filebeat modules enable apache
 ```
 
@@ -51,7 +51,7 @@ Modifier le fichier **/home/user/elastic/filebeat-8.4.0-linux-x86_64/modules.d/a
     # Il faut simplement activer :
     enabled: true
     # et expliquer où se trouve le fichier à lire :
-    var.paths: ["/home/user/elastic/data/*.logs"]
+    var.paths: ["/home/${USER}/elastic/data/*.logs"]
 ```
 
 Maintenant, retournez voir la donnée dans Kibana. Est-ce mieux?
