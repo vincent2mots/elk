@@ -10,18 +10,19 @@ wget https://raw.githubusercontent.com/vincent2mots/elk/main/Industrialisation/e
 sudo chmod +x elk_formation_auto.sh
 ```
 
-## Orsys
+## Installation sur un environnement Orsys :
 ``` sh
-sudo ./elk_formation_auto.sh /home/user
+sudo ./elk_formation_auto.sh user
 ```
 
 Mot de passe du compte **user** : *user*
 
-## Next Decision
+## Installation sur un environnement Next Decision :
 ``` sh
-sudo ./elk_formation_auto.sh /home/sysadmin
+sudo ./elk_formation_auto.sh sysadmin
 ```
 
+## Configuration de Portainer :
 Une fois le tout bien installé, se rendre sur l'URL suivante pour terminer la configuration :
 
 ``` http

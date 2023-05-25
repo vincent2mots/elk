@@ -10,7 +10,8 @@
 # Variables
 # test
 #v_dir_source="/home/user"
-v_dir_source=$1
+v_user=$1
+v_dir_source="/home/${v_user}"
 v_version="8.4.0"
 v_dir_elastic=${v_dir_source}/elastic
 v_dir_data=${v_dir_elastic}/data
@@ -115,6 +116,6 @@ echo " 4. Autres exercices"
 telecharger ${v_exercices_url} ${v_exercices} ${v_dir_elastic} "unzip"
 
 # Donner la propriete des dossiers à l'utilisateur "user" et changement des droits
-chown -R user:user ${v_dir_elastic}
+chown -R ${v_user}:${v_user} ${v_dir_elastic}
 chmod -R 750 ${v_dir_elastic}
 
