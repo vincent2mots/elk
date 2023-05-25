@@ -9,7 +9,8 @@
 
 # Variables
 # test
-v_dir_source="/home/user"
+#v_dir_source="/home/user"
+v_dir_source=$1
 v_version="8.4.0"
 v_dir_elastic=${v_dir_source}/elastic
 v_dir_data=${v_dir_elastic}/data
