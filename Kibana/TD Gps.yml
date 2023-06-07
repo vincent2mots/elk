@@ -1,0 +1,75 @@
+# Creation de l'index "trafic_rennes" et insertion des donnees
+POST /trafic_rennes/_bulk
+ { "index": { "_id": 1 }}
+ {"datetime": "2021-07-22T10:30:00+00:00", "traveltimereliability": 75, "geo_point_2d": [-1.74699007296, 48.0591504968], "denomination": "Route departementale 34", "id": 2023, "trafficstatus": "fluide", "geo_shape": {"type": "MultiLineString", "coordinates": [[[-1.7550501709, 48.0620281717], [-1.7544540387, 48.0619157271], [-1.754453293, 48.061915589], [-1.7539733226, 48.0618283804], [-1.7533904741, 48.061711722], [-1.752753473, 48.0615630652], [-1.7522277659, 48.0613938138], [-1.7508436804, 48.0608482068], [-1.7483561741, 48.0597670339], [-1.7483553093, 48.0597666632], [-1.7463224661, 48.0589075131], [-1.74378039, 48.0578340321], [-1.7419985232, 48.0570723218], [-1.7419977151, 48.0570719809], [-1.7401714216, 48.056311502], [-1.7401710919, 48.0563113654], [-1.7390603419, 48.0558537722]]]}, "averagevehiclespeed": 56, "traveltime": 89, "predefinedlocationreference": "6669_G"}
+ { "index": { "_id": 2 }}
+ {"datetime": "2021-07-22T10:30:00+00:00", "traveltimereliability": 27, "geo_point_2d": [-1.68919444177, 48.096802471], "denomination": "Rue de Nantes", "id": 1882, "trafficstatus": "heavy", "geo_shape": {"type": "MultiLineString", "coordinates": [[[-1.6890480667, 48.0970433139], [-1.6891013391, 48.0969482764], [-1.6893448992, 48.0965640638]]]}, "averagevehiclespeed": 22, "traveltime": 8, "predefinedlocationreference": "563929_D"}
+ { "index": { "_id": 3 }}
+ {"datetime": "2021-07-22T10:30:00+00:00", "traveltimereliability": 27, "geo_point_2d": [-1.68919444177, 48.096802471], "denomination": "Rue de Nantes", "id": 1882, "trafficstatus": "charge", "geo_shape": {"type": "MultiLineString", "coordinates": [[[-1.6890480667, 48.0970433139], [-1.6891013391, 48.0969482764], [-1.6893448992, 48.0965640638]]]}, "averagevehiclespeed": 22, "traveltime": 8, "predefinedlocationreference": "563929_D"}
+ { "index": { "_id": 4 }}
+ {"datetime": "2021-07-22T10:30:00+00:00", "traveltimereliability": 50, "geo_point_2d": [-1.6890448348, 48.0967623838], "denomination": "Rue de Nantes", "id": 1883, "trafficstatus": "heavy", "geo_shape": {"type": "MultiLineString", "coordinates": [[[-1.689196599, 48.0965218772], [-1.6889523708, 48.096907142], [-1.6889511034, 48.0969092651], [-1.6888972308, 48.0970053731]]]}, "averagevehiclespeed": 29, "traveltime": 7, "predefinedlocationreference": "563929_G"}
+ { "index": { "_id": 5 }}
+ {"datetime": "2021-07-22T10:30:00+00:00", "traveltimereliability": 50, "geo_point_2d": [-1.6890448348, 48.0967623838], "denomination": "Rue de Nantes", "id": 1883, "trafficstatus": "charge", "geo_shape": {"type": "MultiLineString", "coordinates": [[[-1.689196599, 48.0965218772], [-1.6889523708, 48.096907142], [-1.6889511034, 48.0969092651], [-1.6888972308, 48.0970053731]]]}, "averagevehiclespeed": 29, "traveltime": 7, "predefinedlocationreference": "563929_G"}
+ { "index": { "_id": 6 }}
+ {"datetime": "2021-07-22T10:30:00+00:00", "traveltimereliability": 100, "geo_point_2d": [-1.74692556699, 48.0592500815], "denomination": "Route departementale 34", "id": 2022, "trafficstatus": "freeFlow", "geo_shape": {"type": "MultiLineString", "coordinates": [[[-1.7389760543, 48.0559457287], [-1.7400866404, 48.0564032546], [-1.7419123657, 48.0571634975], [-1.7436940182, 48.0579251167], [-1.7436943916, 48.0579252753], [-1.7462366434, 48.0589988313], [-1.7482690126, 48.0598577816], [-1.750757564, 48.0609394096], [-1.7507605508, 48.0609406466], [-1.7521490621, 48.0614879984], [-1.7521550161, 48.0614901256], [-1.752687862, 48.0616616755], [-1.7526962461, 48.0616639947], [-1.7533392431, 48.0618140508], [-1.7533426783, 48.061814795], [-1.75392824, 48.0619319965], [-1.7539302112, 48.0619323727], [-1.7544107983, 48.0620196934], [-1.7550065592, 48.062132068]]]}, "averagevehiclespeed": 61, "traveltime": 81, "predefinedlocationreference": "6669_D"}
+ { "index": { "_id": 7 }}
+ {"datetime": "2021-07-22T10:30:00+00:00", "traveltimereliability": 100, "geo_point_2d": [-1.74692556699, 48.0592500815], "denomination": "Route departementale 34", "id": 2022, "trafficstatus": "fluide", "geo_shape": {"type": "MultiLineString", "coordinates": [[[-1.7389760543, 48.0559457287], [-1.7400866404, 48.0564032546], [-1.7419123657, 48.0571634975], [-1.7436940182, 48.0579251167], [-1.7436943916, 48.0579252753], [-1.7462366434, 48.0589988313], [-1.7482690126, 48.0598577816], [-1.750757564, 48.0609394096], [-1.7507605508, 48.0609406466], [-1.7521490621, 48.0614879984], [-1.7521550161, 48.0614901256], [-1.752687862, 48.0616616755], [-1.7526962461, 48.0616639947], [-1.7533392431, 48.0618140508], [-1.7533426783, 48.061814795], [-1.75392824, 48.0619319965], [-1.7539302112, 48.0619323727], [-1.7544107983, 48.0620196934], [-1.7550065592, 48.062132068]]]}, "averagevehiclespeed": 61, "traveltime": 81, "predefinedlocationreference": "6669_D"}
+ { "index": { "_id": 8 }}
+ {"datetime": "2021-07-22T10:30:00+00:00", "traveltimereliability": 75, "geo_point_2d": [-1.74699007296, 48.0591504968], "denomination": "Route departementale 34", "id": 2023, "trafficstatus": "freeFlow", "geo_shape": {"type": "MultiLineString", "coordinates": [[[-1.7550501709, 48.0620281717], [-1.7544540387, 48.0619157271], [-1.754453293, 48.061915589], [-1.7539733226, 48.0618283804], [-1.7533904741, 48.061711722], [-1.752753473, 48.0615630652], [-1.7522277659, 48.0613938138], [-1.7508436804, 48.0608482068], [-1.7483561741, 48.0597670339], [-1.7483553093, 48.0597666632], [-1.7463224661, 48.0589075131], [-1.74378039, 48.0578340321], [-1.7419985232, 48.0570723218], [-1.7419977151, 48.0570719809], [-1.7401714216, 48.056311502], [-1.7401710919, 48.0563113654], [-1.7390603419, 48.0558537722]]]}, "averagevehiclespeed": 56, "traveltime": 89, "predefinedlocationreference": "6669_G"}
+ 
+# Affichage des donnees de l'index 
+GET /trafic_rennes/_search
+
+# DEMO AVEC KIBANA 
+# A l'aide de Kibana, visualiser les donnees avec Discover, puis tentez de le faire avec l'application Maps
+
+# Recuperation du mapping "auto detecte" par Elasticsearch :
+GET /trafic_rennes/_mapping
+# Les types de donnees ne sont pas coherents... 
+
+# Création du mapping correct sur l'index
+PUT /trafic_rennes_dupl
+{
+ "mappings": {
+  "properties": {
+   "geo_point_2d" : {"type": "geo_point"},
+   "geo_shape" : {"type": "geo_shape"}
+  }
+ }
+}
+
+# Faire une copie de l'ancien index vers le nouveau avec le bon mapping
+POST _reindex
+{
+  "source": {
+    "index": "trafic_rennes"
+  },
+  "dest": {
+    "index": "trafic_rennes_dupl"
+  }
+}
+
+DELETE /trafic_rennes
+
+PUT /trafic_rennes
+{
+ "mappings": {
+  "properties": {
+   "geo_point_2d" : {"type": "geo_point"},
+   "geo_shape" : {"type": "geo_shape"}
+  }
+ }
+}
+
+# Faire une copie de l'ancien index vers le nouveau avec le bon mapping
+POST _reindex
+{
+  "source": {
+    "index": "trafic_rennes_dupl"
+  },
+  "dest": {
+    "index": "trafic_rennes"
+  }
+}
+
+DELETE /trafic_rennes_dupl

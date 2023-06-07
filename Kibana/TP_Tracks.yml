@@ -1,0 +1,45 @@
+# Création de l'index
+PUT suivi_flotte_camions
+{
+  "mappings": {
+    "properties": {
+      "num_camion": {"type": "long"},
+      "timestamp": {"type": "date"},
+      "localisation": {"type": "geo_point"}
+    }
+  }
+}
+
+POST /suivi_flotte_camions/_bulk
+{ "index": { "_id": 1 }}
+{"timestamp": "2023-06-07T07:30:00+00:00", "num_camion": 1,"localisation": [-1.629421109950112, 47.22492301151347]}
+{ "index": { "_id": 2 }}
+{"timestamp": "2023-06-07T07:35:00+00:00", "num_camion": 1,"localisation": [-1.6030626575901503, 47.22155376199332]}
+{ "index": { "_id": 3 }}
+{"timestamp": "2023-06-07T07:40:00+00:00", "num_camion": 1,"localisation": [-1.577467759705049, 47.24718569260042]}
+{ "index": { "_id": 4 }}
+{"timestamp": "2023-06-07T07:45:00+00:00", "num_camion": 1,"localisation": [-1.5618102536063931, 47.26877157617989]}
+{ "index": { "_id": 5 }}
+{"timestamp": "2023-06-07T07:55:00+00:00", "num_camion": 1,"localisation": [-1.4569703791477076, 47.293468624653975]}
+{ "index": { "_id": 6 }}
+{"timestamp": "2023-06-07T08:10:00+00:00", "num_camion": 1,"localisation": [-1.2879502554777629, 47.37044806353776]}
+{ "index": { "_id": 7 }}
+{"timestamp": "2023-06-07T09:20:00+00:00", "num_camion": 1,"localisation": [-1.129786510693722, 47.41659468991251]}
+{ "index": { "_id": 7 }}
+{"timestamp": "2023-06-07T09:25:00+00:00", "num_camion": 1,"localisation": [-1.0148219798099458, 47.419644229794585]}
+{ "index": { "_id": 8 }}
+{"timestamp": "2023-06-07T09:30:00+00:00", "num_camion": 1,"localisation": [-0.8746205107726784, 47.43313545396435]}
+{ "index": { "_id": 9 }}
+{"timestamp": "2023-06-07T09:35:00+00:00", "num_camion": 1,"localisation": [-0.7168658548522303, 47.44959060805789]}
+{ "index": { "_id": 10 }}
+{"timestamp": "2023-06-07T09:40:00+00:00", "num_camion": 1,"localisation": [-0.5358892002231711, 47.49120355606947]}
+{ "index": { "_id": 11 }}
+{"timestamp": "2023-06-07T09:45:00+00:00", "num_camion": 1,"localisation": [-0.4072931789526293, 47.51737314572675]}
+{ "index": { "_id": 12 }}
+{"timestamp": "2023-06-07T09:50:00+00:00", "num_camion": 1,"localisation": [-0.2844370127794322, 47.62078124127365]}
+{ "index": { "_id": 13 }}
+{"timestamp": "2023-06-07T09:51:00+00:00", "num_camion": 1,"localisation": [-0.22832803439479024, 47.762936381302055]}
+{ "index": { "_id": 14 }}
+{"timestamp": "2023-06-07T09:52:00+00:00", "num_camion": 1,"localisation": [-0.08251296851092516, 47.692523706694736]}
+{ "index": { "_id": 15 }}
+{"timestamp": "2023-06-07T09:53:00+00:00", "num_camion": 1,"localisation": [-0.07317501552339094, 47.618889560690064]}
