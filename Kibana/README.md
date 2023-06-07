@@ -11,3 +11,11 @@ Plusieurs fichiers proposés :
 8. **runtime_field.yml** : Un exemple de script Painless pour ajouter un runtime field dans Kibana
 9. **json_input.yml** : Besoin de faire un calcul à l'aide d'un composant historique de Kibana? Ici, il y a peut être une solution...
 10. **canvas_barre_filtre.css** : Comment masquer, à l'aide du CSS, une barre de filtre dans Canvas
+11. **TP_Tracks.yml** : TP autour de la fonctionnalité payante Tracks :
+![](https://raw.githubusercontent.com/vincent2mots/elk/main/Kibana/Images/tracks.png)
+12. **TD Gps.yml** : TD autour des mappings et des cartes
+13. **markdown_logo.txt** : Démo d'un markdown avec plusieurs images
+
+## Attention : 
+Pour la partie Reporting, il faut configurer Firefox de la manière suivante : 
+![](https://raw.githubusercontent.com/vincent2mots/elk/main/Kibana/Images/firefox_cross-site_tracking_cookies.PNG)
