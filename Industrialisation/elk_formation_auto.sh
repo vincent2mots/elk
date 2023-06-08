@@ -19,8 +19,9 @@
 #fi
 #v_dir_source="/home/${v_user}"
 v_dir_source=${1}
-# On récupère l'utilisateur à l'aide du dernier token du répertoire
-v_user=${v_dir_source##*/}
+# On récupère le groupe à l'aide du dernier token du répertoire
+v_group=${v_dir_source##*/}
+v_user=${2}
 v_version="8.4.0"
 v_dir_elastic=${v_dir_source}/elastic
 v_dir_data=${v_dir_elastic}/data
@@ -125,6 +126,6 @@ echo " 4. Autres exercices"
 telecharger ${v_exercices_url} ${v_exercices} ${v_dir_elastic} "unzip"
 
 # Donner la propriete des dossiers à l'utilisateur "user" et changement des droits
-chown -R ${v_user}:${v_user} ${v_dir_elastic}
+chown -R ${v_user}:${v_group} ${v_dir_elastic}
 chmod -R 750 ${v_dir_elastic}
 
