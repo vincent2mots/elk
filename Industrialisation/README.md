@@ -10,7 +10,7 @@ wget https://raw.githubusercontent.com/vincent2mots/elk/main/Industrialisation/e
 sudo chmod +x elk_formation_auto.sh
 ```
 
-## Installation sur un environnement  :
+## Installation sur un environnement :
 ``` sh
 sudo ./elk_formation_auto.sh ${USER}
 ```
