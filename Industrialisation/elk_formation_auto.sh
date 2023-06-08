@@ -10,7 +10,13 @@
 # Variables
 # test
 #v_dir_source="/home/user"
-v_user=${1}
+if [ ${1} = "user" ]; then
+  # Côté Orsys, l'installation se fait dans l'arborescence de l'utilisateur
+  v_user=${1}
+else
+  # Côté ND, l'installation se fait dans le groupe principal de l'utilisateur
+  v_user=`id -gn`
+fi
 v_dir_source="/home/${v_user}"
 v_version="8.4.0"
 v_dir_elastic=${v_dir_source}/elastic
