@@ -12,7 +12,7 @@ sudo chmod +x elk_formation_auto.sh
 
 ## Installation sur un environnement :
 ``` sh
-sudo ./elk_formation_auto.sh ${USER}
+sudo ./elk_formation_auto.sh ${HOME}
 ```
 
 ## Configuration de Portainer :
