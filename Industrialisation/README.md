@@ -28,7 +28,7 @@ Mot de passe à créer : **Formation2023**
 
 ``` sh
 cd ~
-wget https://raw.githubusercontent.com/vincent2mots/elk/main/Industrialisation/set_max_map_count.sh -O elk_formation_auto.sh
+wget https://raw.githubusercontent.com/vincent2mots/elk/main/Industrialisation/set_max_map_count.sh -O set_max_map_count.sh
 ```
 
 ``` sh
