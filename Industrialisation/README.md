@@ -23,3 +23,18 @@ Une fois le tout bien installé, se rendre sur l'URL suivante pour terminer la c
 
 Compte : **admin**
 Mot de passe à créer : **Formation2023**
+
+## Si besoin de fixer le paramètre vm.map_map_count indépendamment :
+
+``` sh
+cd ~
+wget https://raw.githubusercontent.com/vincent2mots/elk/main/Industrialisation/set_map_map_count.sh -O elk_formation_auto.sh
+```
+
+``` sh
+sudo chmod +x elk_formation_auto.sh
+```
+
+``` sh
+sudo ./set_map_map_count.sh
+```
