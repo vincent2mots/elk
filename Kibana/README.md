@@ -17,5 +17,5 @@ Plusieurs fichiers proposés :
 13. **markdown_logo.txt** : Démo d'un markdown avec plusieurs images
 
 ## Attention : 
-Pour la partie Reporting, il faut configurer Firefox de la manière suivante : 
+Pour la partie partage de dashboard en embedded, il faut configurer Firefox de la manière suivante : 
 ![](https://raw.githubusercontent.com/vincent2mots/elk/main/Kibana/Images/firefox_cross-site_tracking_cookies.PNG)
