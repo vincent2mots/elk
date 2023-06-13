@@ -3,9 +3,9 @@
 ## But du projet : 
 >- Etape 1 : Envoi de la donnée par Filebeat
 >- Etape 2 : Collecte de la donnée par Logstash
->- Etape 3 : Etape 3 : Découpage de la log dans Logstash
->- Etape 4 : Etape 4 : Envoi vers Elasticsearch
->- Etape 5 : Etape 5 : Design d'un dashboard dans Kibana
+>- Etape 3 : Découpage de la log dans Logstash
+>- Etape 4 : Envoi vers Elasticsearch
+>- Etape 5 : Design d'un dashboard dans Kibana
 
 &#128161; Une des difficulté de ce type de projet consiste à identifier quel ensemble de lignes forme un événément.
 
@@ -21,7 +21,7 @@ filebeat.inputs:
   enabled: true
   # Où se trouve le fichier en entrée :
   paths:
-    - c:\data\biocoop\20230605_log.txt
+    - c:\data\demo\20230605_log.txt
   # Un événement commence par un de ces patterns :
   multiline.pattern: '^SMP|^SUR|^FRAIS|^SMB|^NAL|^FEL|^ALI'
   multiline.negate: true
