@@ -48,8 +48,30 @@ output.logstash:
 
 ## Etape 2 : Collecte de la donnée par Logstash
 
+``` yml
+input {
+  beats {
+    port => 5044
+  }
+}
+```
+
+&#128161; **Astuce** : Dans l'ordre, on définit d'abord l'agent Filebeat mais, dans les faits, on lance d'abord Logstash avant de lancer l'agent
+
 ## Etape 3 : Découpage de la log dans Logstash
 
 ## Etape 4 : Envoi vers Elasticsearch
-
+Définition de la sortie vers Elasticsearch :
+``` yml
+output {
+ elasticsearch {
+   hosts => ["https://localhost:9200"]
+   index => "logs-%{[fields][application]}-%{[fields][environnement]}"
+   action => "create"
+   user => "elastic"
+   password => "formation"
+   ssl_certificate_verification => "false"
+ }
+}
+```
 ## Etape 5 : Design d'un dashboard dans Kibana
