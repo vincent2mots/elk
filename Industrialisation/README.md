@@ -36,5 +36,5 @@ sudo chmod +x set_max_map_count.sh
 ```
 
 ``` sh
-sudo ./set_map_map_count.sh
+sudo ./set_max_map_count.sh
 ```
