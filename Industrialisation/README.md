@@ -32,7 +32,7 @@ wget https://raw.githubusercontent.com/vincent2mots/elk/main/Industrialisation/s
 ```
 
 ``` sh
-sudo chmod +x elk_formation_auto.sh
+sudo chmod +x set_max_map_count.sh
 ```
 
 ``` sh
