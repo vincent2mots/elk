@@ -35,6 +35,17 @@ filebeat.inputs:
    type_interface: etl
 ```
 
+&#128161; **Astuce** : Dans Filebeat, n'oubliez pas de supprimer le contenu du répertoire data entre deux exécutions, sinon l'agent ne renvoie pas la donnée. Pratique en phase de dev quand on est dans un processus itératif / expérimental
+
+L'output de l'agent :
+``` yml
+output.logstash:
+  # Sortie vers Logstash :
+  hosts: ["localhost:5044"]
+```
+
+&#128161; **Astuce** : Dans Filebeat, une seule sortie peut être configurée à la fois.
+
 ## Etape 2 : Collecte de la donnée par Logstash
 
 ## Etape 3 : Découpage de la log dans Logstash
