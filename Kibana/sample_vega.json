@@ -1,0 +1,56 @@
+{
+    $schema: https://vega.github.io/schema/vega-lite/v4.json
+    
+    // Taille du composant :
+    "autosize": "pad",
+    
+    // Titre du composant :
+    title: { 
+      "text": "Carte d'identité de l'interface",
+      "anchor": "middle"
+      "encode": {"title": {"enter": {"fontSize": {"value": "22"}}}}
+    }
+    
+    // Source de données :
+    data: {
+      url: {
+        // Apply dashboard context filters when set
+        %context%: true
+        // Filter the time picker (upper right corner) with this field
+        %timefield%: @timestamp
+        // Which index to search
+        index: snmp-iftable-1.0.0-2023.06.12
+        // Aggregate data by the time field into time buckets, counting the number of documents in each bucket.
+        body: {
+          "size": 1,
+          "_source": ["@timestamp", "host.ip","system.name","host.sous-reseaux", "host.Departement", "host.domain"]
+        }
+      }
+      // On ne veut que les données provenant du tableau hits.hits
+      format: {property: "hits.hits"}
+    }
+    
+    // "Transform" : préparation des champs pour la carte d'identité
+    transform: [
+      {calculate: "'Date : ' + toDate(datum._source['@timestamp'])", "as": "timestamp"},
+      {calculate: "'IP : ' + datum._source.host.ip", "as": "host.ip"},
+      {calculate: "'Département : ' + datum._source.host.Departement", "as": "host.departement"}
+    ]
+  
+    // "mark" : l'élement graphique à ajouter
+    // "layer" : couches de données que l'on affiche dans la visualisation
+    "vconcat": [
+     {"mark": "text", "height": 15
+      "encoding": {"text": {"field": "host.ip","type": "nominal"}}
+     },
+     {"mark": "text", "height": 15,
+      "encoding": {"text": {"field": "host.departement","type": "nominal"}}
+     },
+     {"mark": "text", "height": 15,
+      "encoding": {"text": {"field": "timestamp","type": "nominal"}}
+     }
+    ],
+    
+    // On retire toutes les bordures et on gère l'alignement des textes
+    "config": {"view": {"stroke": 0}, "kibana": {"hideWarnings": true},"text":{"align":"left"}},
+  }
