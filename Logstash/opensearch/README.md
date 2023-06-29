@@ -24,4 +24,4 @@ bin/logstash-plugin install file:///d:/BINAIRES/logstash-output-opensearch.zip
 bin/logstash-plugin list
 ```
 
-Petit cadeau : le plugin offline pour gagner un peu de temps est disponible [ici]()
+Petit cadeau : le plugin offline pour gagner un peu de temps est disponible [ici](https://github.com/vincent2mots/elk/blob/main/Logstash/opensearch/logstash-8.6.1-output-opensearch.zip)
