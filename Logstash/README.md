@@ -35,3 +35,11 @@ bin/logstash -f config/config3.conf
 ```
 
 Pourquoi rien ne se passe?
+
+## TP 4 : Utilisation de l'ingest Pipeline
+&#128161; A faire quand les TP autour de Beats sont terminés
+``` sh
+bin/logstash -f config/config4.conf
+```
+
+Pourquoi rien ne se passe?
