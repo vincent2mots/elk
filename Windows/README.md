@@ -5,6 +5,8 @@
 suivantes, à l'aide de l'invite de commande Windows :
 ``` sh
 docker pull  docker.elastic.co/elasticsearch/elasticsearch:8.4.0
+```
+``` sh
 docker pull  docker.elastic.co/kibana/kibana:8.4.0
 ```
 
@@ -13,6 +15,8 @@ Le reste de l'installation / configuration pourra se faire en séance :
 3. Augmentation du paramètre vm.max_map_count, à l'aide de commandes Windows :
 ``` sh
 wsl -d docker-desktop
+```
+``` sh
 echo 262144 >> /proc/sys/vm/max_map_count
 ```
 4. Installation et configuration de Portainer :
