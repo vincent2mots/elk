@@ -1,6 +1,7 @@
 ## Prérequis pour une formation sur Windows :
 
 1. Télécharger et installer Docker Desktop pour Windows disponible sur le **[lien suivant](https://www.docker.com/products/docker-desktop/)**
+
 2. Une fois Docker Desktop complètement installé, télécharger les images Docker 
 suivantes, à l'aide de l'invite de commande Windows :
 ``` sh
@@ -19,6 +20,8 @@ wsl -d docker-desktop
 ``` sh
 echo 262144 >> /proc/sys/vm/max_map_count
 ```
+Il faut redémarrer Docker Desktop pour que cette modification soit bien prise en compte : ![](https://raw.githubusercontent.com/vincent2mots/elk/main/Windows/images/restart_windows_docker_desktop.PNG)
+
 4. Installation et configuration de Portainer :
 ``` sh
 docker volume create portainer_data
