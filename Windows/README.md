@@ -20,7 +20,8 @@ wsl -d docker-desktop
 ``` sh
 echo 262144 >> /proc/sys/vm/max_map_count
 ```
-Il faut redémarrer Docker Desktop pour que cette modification soit bien prise en compte : ![](https://raw.githubusercontent.com/vincent2mots/elk/main/Windows/images/restart_windows_docker_desktop.PNG)
+Il faut redémarrer Docker Desktop pour que cette modification soit bien prise en compte :
+ ![](https://raw.githubusercontent.com/vincent2mots/elk/main/Windows/images/restart_windows_docker_desktop.PNG)
 
 4. Installation et configuration de Portainer :
 ``` sh
