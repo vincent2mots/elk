@@ -34,3 +34,7 @@ docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /va
 ```
 
 Aller sur l'URL [suivante](https://localhost:9443) pour continuer les actions
+
+docker container ls
+docker stop <ID_CONTENEUR>
+docker start portainer
