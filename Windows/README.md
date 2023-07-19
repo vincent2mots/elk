@@ -38,3 +38,5 @@ Aller sur l'URL [suivante](https://localhost:9443) pour continuer les actions
 docker container ls
 docker stop <ID_CONTENEUR>
 docker start portainer
+
+Lien vers l'ajout de données de démo : http://localhost:5601/app/home#/tutorial_directory/sampleData
