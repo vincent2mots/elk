@@ -54,7 +54,7 @@ filebeat.inputs:
 # Type log pour permettre le multiline :
 - type: log
   # ID unique de l'input :
-  id: mes-logs-talend
+  id: mes-logs-apache
   # Input activé :
   enabled: true
   # Où se trouve le fichier en entrée :
