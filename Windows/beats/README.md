@@ -47,6 +47,22 @@ ou à l'aide du lien suivant :
 Télécharger [Filebeat](https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.4.0-windows-x86_64.zip) et le dézipper dans C:\elastic\Filebeat
 
 Dans le fichier **C:\elastic\Filebeat\filebeat-8.4.0-windows-x86_64\filebeat.yml**, modifier les éléments suivants :
+
+Définition du fichier à lire en entrée : 
+``` yml
+filebeat.inputs:
+# Type log pour permettre le multiline :
+- type: log
+  # ID unique de l'input :
+  id: mes-logs-talend
+  # Input activé :
+  enabled: true
+  # Où se trouve le fichier en entrée :
+  paths:
+    - c:\data\apache.logs
+```
+
+Sortie vers Elasticsearch : 
 ``` yml
 output.elasticsearch:
   hosts: ["localhost:9200"]
