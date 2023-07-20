@@ -52,7 +52,7 @@ Définition du fichier à lire en entrée :
 ``` yml
 filebeat.inputs:
 # Type log pour permettre le multiline :
-- type: log
+- type: filestream
   # ID unique de l'input :
   id: mes-logs-apache
   # Input activé :
