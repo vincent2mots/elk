@@ -92,7 +92,7 @@ C:\elastic\Filebeat\filebeat-8.4.0-windows-x86_64
 filebeat modules enable apache
 ```
 
-Modifier le fichier **C:\elastic\Filebeat\filebeat-8.4.0-windows-x86_64\modules.dapache.yml** :
+Modifier le fichier **C:\elastic\Filebeat\filebeat-8.4.0-windows-x86_64\modules.d\apache.yml** :
 
 ``` yml
 - module: apache
