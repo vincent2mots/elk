@@ -35,8 +35,14 @@ docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /va
 
 Aller sur l'URL [suivante](https://localhost:9443) pour continuer les actions
 
+``` sh
 docker container ls
+```
+``` sh
 docker stop <ID_CONTENEUR>
+```
+``` sh
 docker start portainer
+```
 
 Lien vers l'ajout de données de démo : http://localhost:5601/app/home#/tutorial_directory/sampleData
