@@ -22,7 +22,7 @@ v_dir_source=${1}
 # On récupère le groupe à l'aide du dernier token du répertoire
 v_group=${v_dir_source##*/}
 v_user=${2}
-v_version="8.4.0"
+v_version="8.10.4"
 v_dir_elastic=${v_dir_source}/elastic
 v_dir_data=${v_dir_elastic}/data
 v_dir_exercices=${v_dir_elastic}/exercices
@@ -89,7 +89,7 @@ docker run -d -p 8000:8000 -p 9443:9443 --name portainer \
     --restart=always \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v portainer_data:/data \
-    portainer/portainer-ce:2.9.3
+    portainer/portainer-ce:latest
 
 # Creation des arborescences pour la formation
 echo "Creation des dossiers et recuperation des sources"
