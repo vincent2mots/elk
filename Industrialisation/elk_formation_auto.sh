@@ -93,7 +93,7 @@ docker run -d -p 8000:8000 -p 9443:9443 --name portainer \
     -v portainer_data:/data \
     -v ${v_dir_source}/portainer_password:/tmp/portainer_password \ 
     portainer/portainer-ce:2.19.1 \
-    --admin-password-file /tmp/portainer_password
+    --admin-password-file ${v_dir_source}/portainer_password
 
 # Creation des arborescences pour la formation
 echo "Creation des dossiers et recuperation des sources"
