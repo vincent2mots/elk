@@ -9,6 +9,10 @@ Créer une nouvelle stack et choisir "Repository" dans les méthodes de construc
 ![](https://raw.githubusercontent.com/vincent2mots/elk/main/Portainer/images/tp1.PNG)
 
 Renseigner les champs comme suit :
+- Titre de la stack :
+``` 
+tp1
+``` 
 - Repository URL : 
 ``` 
 https://github.com/vincent2mots/elk.git 
@@ -23,6 +27,10 @@ tp1.yml
 Une fois la stack 1 supprimée, faire comme ci-après :
 
 Renseigner les champs comme suit :
+- Titre de la stack :
+``` 
+tp2
+``` 
 - Repository URL : 
 ``` 
 https://github.com/vincent2mots/elk.git 
@@ -37,6 +45,10 @@ tp2.yml
 Une fois la stack 2 supprimée, faire comme ci-après :
 
 Renseigner les champs comme suit :
+- Titre de la stack :
+``` 
+tp3
+``` 
 - Repository URL : 
 ``` 
 https://github.com/vincent2mots/elk.git 
