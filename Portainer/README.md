@@ -24,37 +24,37 @@ Procédure pour la création des stacks sous Portainer
 > ``` 
 
 ### Stack 2
-Une fois la stack 1 supprimée, faire comme ci-après :
-
-Renseigner les champs comme suit :
-- Titre de la stack :
-``` 
-tp2
-``` 
-- Repository URL : 
-``` 
-https://github.com/vincent2mots/elk.git
-```
-- Repository reference : LAISSER LA VALEUR PAR DEFAUT
-- Compose path : 
-``` 
-tp2.yml
-``` 
+> Une fois la stack 1 supprimée, faire comme ci-après :
+> 
+> Renseigner les champs comme suit :
+> - Titre de la stack :
+> ``` 
+> tp2
+> ``` 
+> - Repository URL : 
+> ``` 
+> https://github.com/vincent2mots/elk.git
+> ```
+> - Repository reference : LAISSER LA VALEUR PAR DEFAUT
+> - Compose path : 
+> ``` 
+> tp2.yml
+> ``` 
 
 ### Stack 3
-Une fois la stack 2 supprimée, faire comme ci-après :
-
-Renseigner les champs comme suit :
-- Titre de la stack :
-``` 
-tp3
-``` 
-- Repository URL : 
-``` 
-https://github.com/vincent2mots/elk.git
-```
-- Repository reference : LAISSER LA VALEUR PAR DEFAUT
-- Compose path : 
-``` 
-tp3.yml
-``` 
+> Une fois la stack 2 supprimée, faire comme ci-après :
+> 
+> Renseigner les champs comme suit :
+> - Titre de la stack :
+> ``` 
+> tp3
+> ``` 
+> - Repository URL : 
+> ``` 
+> https://github.com/vincent2mots/elk.git
+> ```
+> - Repository reference : LAISSER LA VALEUR PAR DEFAUT
+> - Compose path : 
+> ``` 
+> tp3.yml
+> ``` 
