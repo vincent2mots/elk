@@ -70,8 +70,11 @@ telecharger() {
 }
 
 # Installation de librairies pour Firefox
-apt update
-apt install libcanberra-gtk-module libcanberra-gtk3-module -y
+#apt update
+#apt install libcanberra-gtk-module libcanberra-gtk3-module -y
+
+#snap remove --purge firefox
+#apt install firefox
 
 # Augmentation du parametre vm_max_map_count et vérification que tout est OK
 echo "Augmentation du parametre vm_max_map_count"
@@ -131,6 +134,6 @@ chown -R ${v_user}:${v_group} ${v_dir_elastic}
 chmod -R 750 ${v_dir_elastic}
 
 # Lancement de Firefox avec les URL Github et Portainer
-echo "Lancement de Firefox"
-/usr/bin/firefox --new-window https://github.com/vincent2mots/elk/tree/main
-/usr/bin/firefox --new-tab https://localhost:9443
+#echo "Lancement de Firefox"
+#firefox --new-window https://github.com/vincent2mots/elk/tree/main
+#firefox --new-tab https://localhost:9443
