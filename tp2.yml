@@ -1,7 +1,7 @@
 version: '2'
 services:
   elasticsearch1:
-    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.4
     container_name: elasticsearch1
     environment:
       - cluster.name=test_cluster
@@ -22,7 +22,7 @@ services:
       - 9200:9200
 
   elasticsearch2:
-    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.4
     container_name: elasticsearch2
     environment:
       - cluster.name=test_cluster
