@@ -86,14 +86,15 @@ docker pull docker.elastic.co/kibana/kibana:${v_version} --quiet
 # Création de la partie Portainer
 echo "Mise en place Portainer"
 echo -n ${v_portainer_password} > ${v_dir_source}/portainer_password
-docker volume create portainer_data
-docker run -d -p 8000:8000 -p 9443:9443 --name portainer \
-    --restart=always \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    -v portainer_data:/data \
-    -v ${v_dir_source}/portainer_password:/tmp/portainer_password \ 
-    portainer/portainer-ce:2.19.1 \
-    --admin-password-file ${v_dir_source}/portainer_password
+#docker run -d -p 8000:8000 -p 9443:9443 --name portainer \
+#    --restart=always \
+#    -v /var/run/docker.sock:/var/run/docker.sock \
+#    -v portainer_data:/data \
+#    -v ${v_dir_source}/portainer_password:/tmp/portainer_password \ 
+#    portainer/portainer-ce:2.19.1 \
+#    --admin-password-file ${v_dir_source}/portainer_password
+
+docker run -d -p 9443:9443 -p 8000:8000 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v ${v_dir_source}/portainer_password:/tmp/portainer_password portainer/portainer-ce:2.19.1 --admin-password-file ${v_dir_source}/portainer_password
 
 # Creation des arborescences pour la formation
 echo "Creation des dossiers et recuperation des sources"
