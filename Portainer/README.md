@@ -2,7 +2,7 @@
 
 Procédure pour la création des stacks sous Portainer
 
-### TP 1
+### Stack 1
 Les docker compose sont maintenant disponibles sur GitHub et il est possible facilement d'intégrer cela avec Portainer :
 
 Créer une nouvelle stack et choisir "Repository" dans les méthodes de construction :
@@ -10,14 +10,39 @@ Créer une nouvelle stack et choisir "Repository" dans les méthodes de construc
 
 Renseigner les champs comme suit :
 - Repository URL : 
-``` https://github.com/vincent2mots/elk.git ```
+``` 
+https://github.com/vincent2mots/elk.git 
+```
 - Repository reference : LAISSER LA VALEUR PAR DEFAUT
-- Compose path : tp1.yml
+- Compose path : 
+``` 
+tp1.yml
+``` 
 
-### TP 2
-Une fois la stack du TP1 supprimé, faire comme ci-après :
+### Stack 2
+Une fois la stack 1 supprimée, faire comme ci-après :
 
 Renseigner les champs comme suit :
-- Repository URL : https://github.com/vincent2mots/elk.git
+- Repository URL : 
+``` 
+https://github.com/vincent2mots/elk.git 
+```
 - Repository reference : LAISSER LA VALEUR PAR DEFAUT
-- Compose path : tp2.yml
+- Compose path : 
+``` 
+tp2.yml
+``` 
+
+### Stack 3
+Une fois la stack 2 supprimée, faire comme ci-après :
+
+Renseigner les champs comme suit :
+- Repository URL : 
+``` 
+https://github.com/vincent2mots/elk.git 
+```
+- Repository reference : LAISSER LA VALEUR PAR DEFAUT
+- Compose path : 
+``` 
+tp3.yml
+``` 
