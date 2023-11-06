@@ -22,7 +22,8 @@ Une fois le tout bien installé, se rendre sur l'URL suivante pour terminer la c
 
 
 Compte : **admin**
-Mot de passe à créer : **Formation2023**
+
+Mot de passe : **Formation2023**
 
 ## Si besoin de fixer le paramètre vm.map_map_count indépendamment :
 

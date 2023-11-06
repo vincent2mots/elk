@@ -69,6 +69,10 @@ telecharger() {
   fi
 }
 
+# Installation de librairies pour Firefox
+apt update
+apt install libcanberra-gtk-module libcanberra-gtk3-module -y
+
 # Augmentation du parametre vm_max_map_count et vérification que tout est OK
 echo "Augmentation du parametre vm_max_map_count"
 sysctl -w vm.max_map_count=262144
@@ -126,3 +130,7 @@ telecharger ${v_exercices_url} ${v_exercices} ${v_dir_elastic} "unzip"
 chown -R ${v_user}:${v_group} ${v_dir_elastic}
 chmod -R 750 ${v_dir_elastic}
 
+# Lancement de Firefox avec les URL Github et Portainer
+echo "Lancement de Firefox"
+/usr/bin/firefox --new-window https://github.com/vincent2mots/elk/tree/main
+/usr/bin/firefox --new-tab https://localhost:9443
