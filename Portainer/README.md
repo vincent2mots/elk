@@ -15,7 +15,7 @@ tp1
 ``` 
 - Repository URL : 
 ``` 
-https://github.com/vincent2mots/elk.git 
+https://github.com/vincent2mots/elk.git
 ```
 - Repository reference : LAISSER LA VALEUR PAR DEFAUT
 - Compose path : 
@@ -33,7 +33,7 @@ tp2
 ``` 
 - Repository URL : 
 ``` 
-https://github.com/vincent2mots/elk.git 
+https://github.com/vincent2mots/elk.git
 ```
 - Repository reference : LAISSER LA VALEUR PAR DEFAUT
 - Compose path : 
@@ -51,7 +51,7 @@ tp3
 ``` 
 - Repository URL : 
 ``` 
-https://github.com/vincent2mots/elk.git 
+https://github.com/vincent2mots/elk.git
 ```
 - Repository reference : LAISSER LA VALEUR PAR DEFAUT
 - Compose path : 
