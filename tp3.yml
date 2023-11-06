@@ -165,7 +165,7 @@ services:
       - XPACK_REPORTING_CAPTURE_BROWSER_CHROMIUM_DISABLESANDBOX=true
       - XPACK_APM_SERVICEMAPENABLED=true
       - I18N_LOCALE=fr_FR
-    mem_limit: 2g
+    mem_limit: 1g
     healthcheck:
       test:
         [
