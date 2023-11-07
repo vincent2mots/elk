@@ -1,0 +1,17 @@
+# URL UTILES PENDANT LA FORMATION :
+Le Github avec les exercices : https://github.com/vincent2mots/elk
+Le lien vers Portainer en local : https://localhost:9443
+ Compte pour Portainer : admin
+ Mot de passe :          Formation2023
+
+# CONFIGURATION PORTAINER
+URL du référentiel Git : https://github.com/vincent2mots/elk.git
+Les 3 docker compose proposés :
+ - tp1.yml
+ - tp2.yml
+ - tp3.yml
+
+# LES AUTRES COMPTES / MOT DE PASSE
+Pour accéder aux clusters Elasticsearch locaux :
+ Compte : elastic
+ Mot de passe : formation
