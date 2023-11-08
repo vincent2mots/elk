@@ -51,7 +51,7 @@ v_filebeat_config="filebeat.yml"
 v_dir_filebeat="${v_dir_elastic}/filebeat-${v_version}-linux-x86_64"
 v_portainer_password="Formation2023"
 v_lisez_moi_url="https://raw.githubusercontent.com/vincent2mots/elk/main/Industrialisation/lisez_moi.txt"
-v_lisez_moi="lisez_mois.txt"
+v_lisez_moi="lisez_moi.txt"
 
 
 # Fonctions
