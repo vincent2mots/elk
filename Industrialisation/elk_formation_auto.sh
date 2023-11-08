@@ -50,6 +50,8 @@ v_filebeat_config_url="https://raw.githubusercontent.com/vincent2mots/elk/main/B
 v_filebeat_config="filebeat.yml"
 v_dir_filebeat="${v_dir_elastic}/filebeat-${v_version}-linux-x86_64"
 v_portainer_password="Formation2023"
+v_lisez_moi_url="https://raw.githubusercontent.com/vincent2mots/elk/main/Industrialisation/lisez_moi.txt"
+v_lisez_moi="lisez_mois.txt"
 
 
 # Fonctions
@@ -128,6 +130,10 @@ telecharger ${v_metricbeat_config_url} ${v_metricbeat_config} ${v_dir_metricbeat
 # Autres exercices
 echo " 4. Autres exercices"
 telecharger ${v_exercices_url} ${v_exercices} ${v_dir_elastic} "unzip"
+
+# Lisez-moi
+echo " 5. Lisez-moi"
+telecharger ${v_lisez_moi_url} ${v_lisez_moi} ${v_dir_source} "rien"
 
 # Donner la propriete des dossiers à l'utilisateur "user" et changement des droits
 chown -R ${v_user}:${v_group} ${v_dir_elastic}
