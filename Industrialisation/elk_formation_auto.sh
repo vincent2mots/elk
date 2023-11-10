@@ -133,7 +133,7 @@ telecharger ${v_exercices_url} ${v_exercices} ${v_dir_elastic} "unzip"
 
 # Lisez-moi
 echo " 5. Lisez-moi"
-telecharger ${v_lisez_moi_url} ${v_lisez_moi} ${v_dir_source} "rien"
+telecharger ${v_lisez_moi_url} ${v_lisez_moi} ${v_dir_elastic} "rien"
 
 # Donner la propriete des dossiers à l'utilisateur "user" et changement des droits
 chown -R ${v_user}:${v_group} ${v_dir_elastic}
