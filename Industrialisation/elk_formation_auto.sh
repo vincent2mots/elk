@@ -71,6 +71,9 @@ telecharger() {
   fi
 }
 
+# Ménage avant installation
+if [ -d "$v_dir_elastic" ]; then rm -Rf $v_dir_elastic; fi
+
 # Augmentation du parametre vm_max_map_count et vérification que tout est OK
 echo "Augmentation du parametre vm_max_map_count"
 sysctl -w vm.max_map_count=262144
