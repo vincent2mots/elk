@@ -1,6 +1,7 @@
 ## Exercice autour de l'alerting avec Kibana
 
 ### Etape 1 : configurer un connecteur
+La création d'un nouveau connecteur se fait dans le menu **Stack Management > Connectors**
 
 ### Etape 2 : Analyser la donnée avant de créer la règle
 A l'aide du menu Discover, chercher les erreurs 404 dans la Data View **Kibana Sample Data Logs** :
@@ -14,15 +15,19 @@ Par la suite, nous allons configurer une règle pour nous alerter lorsqu'au moin
 ### Etape 2 : configurer une règle
 
 Une fois dans le menu **Stack Management > Rules**, créer une nouvelle règle et lui donner un nom : 
+
 ![](https://raw.githubusercontent.com/vincent2mots/elk/main/Kibana/Alerting/create_rule_1.PNG)
 
 Il existe plusieurs types de règles pré-configurées. Choisir dans **STACK RULES > Elasticsearch query** :
+
 ![](https://raw.githubusercontent.com/vincent2mots/elk/main/Kibana/Alerting/create_rule_2.PNG)
 
 Choisir **KQL or Lucene** :
+
 ![](https://raw.githubusercontent.com/vincent2mots/elk/main/Kibana/Alerting/create_rule_3.PNG)
 
 Configurer comme ci-après :
+
 ![](https://raw.githubusercontent.com/vincent2mots/elk/main/Kibana/Alerting/create_rule_4.PNG)
 
 Choisir la Data View **Kibana Sample Data Logs**
@@ -33,5 +38,6 @@ Mettre le filtre temporel à **15** minutes
 Il est possible de tester la requête pour vérifier que l'on obtient comme dans le menu Discover.
 
 Enfin, il ne reste plus qu'à choisir la ou les actions à effectuer :
+
 ![](https://raw.githubusercontent.com/vincent2mots/elk/main/Kibana/Alerting/create_rule_5.PNG)
 
