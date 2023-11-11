@@ -15,15 +15,10 @@ sudo chmod +x elk_formation_auto.sh
 sudo ./elk_formation_auto.sh ${HOME} ${USER}
 ```
 
-## Configuration de Portainer :
-Une fois le tout bien installé, se rendre sur l'URL suivante pour terminer la configuration :
+## Page d'accueil :
+Une fois le tout bien installé, ouvrir le fichier ELK.html suivant et se laisser guider :
 
-[Lien vers Portainer](https://localhost:9443)
-
-
-Compte : **admin**
-
-Mot de passe : **Formation2023**
+![](https://raw.githubusercontent.com/vincent2mots/elk/main/Industrialisation/images/elk_html.png)
 
 ## Si besoin de fixer le paramètre vm.map_map_count indépendamment :
 
