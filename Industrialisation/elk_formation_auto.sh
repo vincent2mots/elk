@@ -8,16 +8,6 @@
 # Mot de passe : user
 
 # Variables
-# test
-#v_dir_source="/home/user"
-#if [ ${1} = "user" ]; then
-  # Côté Orsys, l'installation se fait dans l'arborescence de l'utilisateur
-#  v_user=${1}
-#else
-  # Côté ND, l'installation se fait dans le groupe principal de l'utilisateur
-#  v_user=`id -gn`
-#fi
-#v_dir_source="/home/${v_user}"
 v_dir_source=${1}
 # On récupère le groupe à l'aide du dernier token du répertoire
 v_group=${v_dir_source##*/}
