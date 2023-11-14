@@ -45,13 +45,25 @@ cd ~/elastic/filebeat-8.11.1-linux-x86_64
 Modifier le fichier **/home/user/elastic/filebeat-8.11.1-linux-x86_64/modules.d/apache.yml** :
 
 ``` yml
+# Module: apache
+# Docs: https://www.elastic.co/guide/en/beats/filebeat/main/filebeat-module-apache.html
+
 - module: apache
   # Access logs
   access:
-    # Il faut simplement activer :
     enabled: true
-    # et expliquer où se trouve le fichier à lire :
-    var.paths: ["/home/${USER}/elastic/data/*.logs"]
+
+    # Set custom paths for the log files. If left empty,
+    # Filebeat will choose the paths depending on your OS.
+   var.paths: ["/home/${USER}/elastic/data/*.logs"]
+
+  # Error logs
+  error:
+    enabled: false
+
+    # Set custom paths for the log files. If left empty,
+    # Filebeat will choose the paths depending on your OS.
+    #var.paths:
 ```
 
 Maintenant, retournez voir la donnée dans Kibana. Est-ce mieux?
