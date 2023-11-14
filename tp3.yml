@@ -2,7 +2,7 @@ version: "2.2"
 
 services:
   setup:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.4
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.1
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
     user: "0"
@@ -60,7 +60,7 @@ services:
     depends_on:
       setup:
         condition: service_healthy
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.4
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.1
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
       - esdata01_tp3:/usr/share/elasticsearch/data
@@ -104,7 +104,7 @@ services:
   es02:
     depends_on:
       - es01
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.4
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.1
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
       - esdata02_tp3:/usr/share/elasticsearch/data
