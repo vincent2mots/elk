@@ -55,7 +55,7 @@ Modifier le fichier **/home/user/elastic/filebeat-8.11.1-linux-x86_64/modules.d/
 
     # Set custom paths for the log files. If left empty,
     # Filebeat will choose the paths depending on your OS.
-   var.paths: ["/home/${USER}/elastic/data/*.logs"]
+    var.paths: ["/home/${USER}/elastic/data/*.logs"]
 
   # Error logs
   error:
