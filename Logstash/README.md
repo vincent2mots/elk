@@ -9,7 +9,7 @@ head -10 ~/elastic/data/apache.logs
 
 Pour tous les TP, se positionner dans le répertoire suivant :
 ``` sh
-cd ~/elastic/logstash-8.10.4
+cd ~/elastic/logstash-8.11.1
 ```
 
 ## TP 1 : Découverte d'une configuration Logstash
