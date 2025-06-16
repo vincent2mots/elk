@@ -1,0 +1,86 @@
+# TP autour de l'agrégation significant terms
+
+# Cas : Détection d'anomalies
+# Depuis une semaine, détecter les fabricants
+# surprenants par rapport aux magasins (à New York)
+
+# Tout d'abord, prenons une semaine de données, dans le magasin de New York
+GET /kibana_sample_data_ecommerce/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "range": {
+            "order_date": {
+              "gte": "now-1w",
+              "lte": "now"
+            }
+          }
+        },
+        {"terms": {"geoip.city_name": ["New York"]}}
+      ]
+    }
+  }
+}
+
+# Maintenant, tentons de voir s'il y a des ventes "étonnantes" dans ce jeu de données :
+GET /kibana_sample_data_ecommerce/_search
+{
+  "size": 0, 
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "range": {
+            "order_date": {
+              "gte": "now-1w",
+              "lte": "now"
+            }
+          }
+        },
+        {"terms": {"geoip.city_name": ["New York"]}}
+      ]
+    }
+  },
+  "aggs": {
+    "fabricants_surprenants": {
+      "significant_terms": {
+        "field": "manufacturer.keyword"
+      }
+    }
+  }
+}
+
+# Quelles conclusions tirer de ce résultat?
+# Apparemment, le fabricant "Tigress Entreprises" est très sollicité par ce magasin
+# D'ordinaire, ce fabricant représente 23% des ventes (1055/4675) (bg_count du document / bg_count de l'agrégation)
+# Ici, il représente 33%! (63/189) (doc_count du document / doc_count de l'agrégation)
+
+# Cette analyse est intéressante mais se focalise sur un seul magasin (New York). Si l'on souhaite reproduire cela pour les autres, il faudrait répéter l'opération plusieurs fois...
+
+# Cas d'une analyse multiple (pour résoudre la problématique relevée ci-avant) :
+
+GET /kibana_sample_data_ecommerce/_search
+{
+  "size": 0, 
+  "query": {
+    "range": {
+      "order_date": {
+        "gte": "now-1w",
+        "lte": "now"
+      }
+    }
+  },
+  "aggs": {
+    "Fabricants": {
+      "terms": {"field": "geoip.city_name"},
+      "aggs": {
+        "fabricants_surprenants": {
+          "significant_terms": 
+           {"field": "manufacturer.keyword"}
+        }
+      }
+    }
+  }
+}

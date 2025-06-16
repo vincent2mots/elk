@@ -1,0 +1,23 @@
+POST /colis/_bulk
+{ "index": {"_id": 1}}
+{ "num_colis": "colis_995", "date": "2022-11-18T10:34:00+00:00", "event": "01_Demande créée"}
+{ "index": {"_id": 2}}
+{ "num_colis": "colis_995", "date": "2022-11-18T10:35:00+00:00", "event": "02_Pris en charge"}
+{ "index": {"_id": 3}}
+{ "num_colis": "colis_995", "date": "2022-11-19T17:45:00+00:00", "event": "03_Expédié"}
+{ "index": {"_id": 4}}
+{ "num_colis": "colis_995", "date": "2022-11-20T20:57:00+00:00", "event": "04_Livré"}
+{ "index": {"_id": 5}}
+{ "num_colis": "colis_996", "date": "2022-11-18T07:32:00+00:00", "event": "01_Demande créée"}
+{ "index": {"_id": 6}}
+{ "num_colis": "colis_996", "date": "2022-11-25T10:22:00+00:00", "event": "02_Pris en charge"}
+{ "index": {"_id": 7}}
+{ "num_colis": "colis_996", "date": "2022-11-28T12:15:00+00:00", "event": "03_Expédié"}
+
+
+
+def pris_en_charge = doc['02_Pris en charge.date.max'].value.millis;
+def expedie = doc['03_Expédié.date.max'].value.millis;
+Long difference = (expedie - pris_en_charge)/1000/60/60/24;
+emit(difference);
+
