@@ -1,5 +1,0 @@
-Application métier : dt_log. 16h41 10s
-Filebeat : dt_filebeat. 16h41 12s
-Apache Kafka : dt_kafka. 16h41 15s
-Logstash : dt_logstash. 22h30 10s
-Elasticsearch : @timestamp. 22h30 12s

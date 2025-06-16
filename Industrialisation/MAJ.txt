@@ -1,7 +1,0 @@
-En cas de montée de version :
- - Modifier le readme du dossier Beats
- - Modifier le readme du dossier Logstash
- - Modifier les 3 docker compose tp1, tp2 et tp3
- - Modifier le script d'industrialisation
-
-Puis tout tester!
