@@ -1,7 +1,0 @@
-{
-"script": {
-"inline": "doc['taxless_total_price'].value / doc['total_quantity'].value",
-"lang": "painless"
-}
-}
-
