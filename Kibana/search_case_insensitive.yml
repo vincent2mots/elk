@@ -1,0 +1,59 @@
+# Mapping avec lowercase et asciifolding (case insensitive)
+PUT index_name
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "my_analyzer": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "asciifolding"
+          ]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "consultant": {"type": "text", "analyzer": "my_analyzer"}
+    }
+  }
+}
+
+# test de l'analyzer :
+POST index_name/_analyze
+{
+  "analyzer": "my_analyzer",
+  "text": "François Gruau"
+}
+
+# insertion de données
+POST /index_name/_bulk
+{ "index": { "_id": 1 }}
+{ "consultant": "François Gruau"}
+
+# recherche match
+GET /index_name/_search
+{
+  "query": {
+    "match": {
+      "consultant": "francois"
+    }
+  }
+}
+
+# recherche floue
+GET /index_name/_search
+{
+  "query": {
+    "fuzzy": {
+      "consultant": {
+        "value": "franqois",
+        "fuzziness": "AUTO"
+      }
+    }
+  }
+}
+

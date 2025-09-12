@@ -1,0 +1,23 @@
+.es(index= kibana_sample_data_ecommerce,
+    timefield=order_date,
+    metric=sum:taxless_total_price,
+    interval=12h)
+   .label('Total HT actuel')
+   .title('Volume de ventes dans le temps')
+   .yaxis(1,units="custom::€", position=left)
+   .color(green)
+   .lines(width=0.9,fill=2)
+   ,
+.es(index= kibana_sample_data_ecommerce,
+    timefield=order_date,
+    metric=sum:taxless_total_price,
+    offset=-1w,
+    interval=12h)
+   .label('Total HT semaine passée')
+   .title('Volume de ventes semaine passée')
+   .yaxis(1,units="custom::€", position=left)
+   .color(red)
+   .lines(width=0.9,fill=0)
+   .legend(columns=2,position=ne)
+
+
