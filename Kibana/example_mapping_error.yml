@@ -1,0 +1,12 @@
+POST /log-tomcat-20250904/_bulk
+ { "index": { "_id": 1 }}
+ {"message": "Erreur dans la log truc"}
+
+GET log-tomcat-20250904/_mapping
+
+
+POST /log-tomcat-20250905/_bulk
+ { "index": { "_id": 1 }}
+ {"message": 9}
+
+GET log-tomcat-20250905/_mapping
