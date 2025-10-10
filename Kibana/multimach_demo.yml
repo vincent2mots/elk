@@ -1,0 +1,82 @@
+PUT produits_labo
+{
+  "mappings": {
+    "properties": {
+      "nom": { "type": "text" },
+      "categorie": { "type": "keyword" },
+      "formule": { "type": "text" },
+      "laboratoire": { "type": "keyword" },
+      "date_mise_marche": { "type": "date" },
+      "prix_ht": { "type": "float" },
+      "unite": { "type": "keyword" },
+      "stock": { "type": "integer" },
+      "lot": { "type": "keyword" },
+      "etat": { "type": "keyword" },
+      "ingredients": { "type": "text" },
+      "temp_conservation": { "type": "keyword" },
+      "commentaire": { "type": "text" }
+    }
+  }
+}
+
+POST produits_labo/_bulk
+{ "index": { "_id": 1 }}
+{ "nom": "Amoxicilline 500 mg", "categorie": "Antibiotique", "formule": "C16H19N3O5S", "laboratoire": "PharmaNova", "date_mise_marche": "2018-06-12", "prix_ht": 12.5, "unite": "boîte de 12 gélules", "stock": 230, "lot": "A18-2345", "etat": "Disponible", "temp_conservation": "Température ambiante" }
+{ "index": { "_id": 2 }}
+{ "nom": "Paracétamol 1g", "categorie": "Antalgique", "laboratoire": "MediPharm", "date_mise_marche": "2015-02-10", "prix_ht": 5.9, "unite": "boîte de 8 comprimés", "stock": 1200, "etat": "Disponible", "ingredients": "paracétamol pur" }
+{ "index": { "_id": 3 }}
+{ "nom": "Ibuprofène 400 mg", "categorie": "Anti-inflammatoire", "laboratoire": "BioSanté", "date_mise_marche": "2019-09-22", "prix_ht": 8.2, "unite": "boîte de 20 comprimés", "stock": 540, "lot": "IB-9821", "etat": "Disponible" }
+{ "index": { "_id": 4 }}
+{ "nom": "Oméprazole 20 mg", "categorie": "Gastro-entérologie", "laboratoire": "GastroLab", "prix_ht": 14.8, "unite": "boîte de 14 gélules", "stock": 410, "etat": "Disponible", "commentaire": "Réservé à l’adulte" }
+{ "index": { "_id": 5 }}
+{ "nom": "Vitamine D3 1000 UI", "categorie": "Complément alimentaire", "laboratoire": "NutriPlus", "date_mise_marche": "2020-01-15", "prix_ht": 9.5, "unite": "flacon 30 ml", "stock": 860, "etat": "Disponible", "ingredients": "cholécalciférol, huile d’olive" }
+{ "index": { "_id": 6 }}
+{ "nom": "Cétirizine 10 mg", "categorie": "Antihistaminique", "laboratoire": "AllergoPharma", "prix_ht": 6.4, "unite": "boîte de 15 comprimés", "stock": 270, "lot": "CET-552", "etat": "Rupture temporaire" }
+{ "index": { "_id": 7 }}
+{ "nom": "Insuline Glargine", "categorie": "Antidiabétique", "laboratoire": "GenoMed", "formule": "C267H404N72O78S6", "date_mise_marche": "2017-03-01", "prix_ht": 58.3, "unite": "stylo 3 ml", "stock": 90, "etat": "Sous quota", "temp_conservation": "Réfrigéré (2-8°C)" }
+{ "index": { "_id": 8 }}
+{ "nom": "Hydrocortisone crème 1%", "categorie": "Dermatologie", "laboratoire": "DermaLab", "date_mise_marche": "2021-07-18", "prix_ht": 11.0, "unite": "tube 30 g", "stock": 310, "etat": "Disponible", "commentaire": "Usage externe uniquement" }
+{ "index": { "_id": 9 }}
+{ "nom": "Azithromycine 250 mg", "categorie": "Antibiotique", "laboratoire": "PharmaNova", "prix_ht": 18.9, "unite": "boîte de 6 comprimés", "stock": 145, "lot": "AZ-775", "etat": "Disponible" }
+{ "index": { "_id": 10 }}
+{ "nom": "Metformine 850 mg", "categorie": "Antidiabétique", "laboratoire": "GenoMed", "prix_ht": 13.7, "unite": "boîte de 30 comprimés", "stock": 480, "etat": "Disponible" }
+{ "index": { "_id": 11 }}
+{ "nom": "Loratadine 10 mg", "categorie": "Antihistaminique", "laboratoire": "AllergoPharma", "prix_ht": 6.9, "unite": "boîte de 10 comprimés", "stock": 620, "etat": "Disponible" }
+{ "index": { "_id": 12 }}
+{ "nom": "Vitamine C 500 mg", "categorie": "Complément alimentaire", "laboratoire": "NutriPlus", "prix_ht": 7.5, "unite": "boîte de 30 comprimés", "stock": 990, "etat": "Disponible", "ingredients": "acide ascorbique, excipients" }
+{ "index": { "_id": 13 }}
+{ "nom": "Morphine sulfate 10 mg", "categorie": "Antalgique", "laboratoire": "MediPharm", "prix_ht": 42.0, "unite": "ampoule injectable 10 ml", "stock": 35, "etat": "Contrôlé", "commentaire": "Prescription hospitalière obligatoire" }
+{ "index": { "_id": 14 }}
+{ "nom": "Lévothyroxine 75 µg", "categorie": "Hormone thyroïdienne", "laboratoire": "EndoCare", "date_mise_marche": "2016-11-04", "prix_ht": 19.5, "unite": "boîte de 30 comprimés", "stock": 250, "etat": "Disponible" }
+{ "index": { "_id": 15 }}
+{ "nom": "Acide folique 5 mg", "categorie": "Complément alimentaire", "laboratoire": "NutriPlus", "prix_ht": 4.2, "unite": "boîte de 20 comprimés", "stock": 720, "etat": "Disponible", "commentaire": "Recommandé pour femmes enceintes" }
+
+
+
+
+
+GET produits_labo/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "acode boîte 500", 
+      "fields": [
+        "nom^3",
+        "categorie^2",
+        "laboratoire",
+        "ingredients",
+        "commentaire"
+      ],
+      "fuzziness": "AUTO",
+      "operator": "or"
+    }
+  },
+  "highlight": {
+    "fields": {
+      "nom": {},
+      "categorie": {},
+      "laboratoire": {}
+    }
+  }
+}
+
