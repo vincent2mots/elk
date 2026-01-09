@@ -5,10 +5,10 @@
 2. Une fois Docker Desktop complètement installé, télécharger les images Docker 
 suivantes, à l'aide de l'invite de commande Windows :
 ``` sh
-docker pull  docker.elastic.co/elasticsearch/elasticsearch:8.4.0
+docker pull  docker.elastic.co/elasticsearch/elasticsearch:8.18.2
 ```
 ``` sh
-docker pull  docker.elastic.co/kibana/kibana:8.4.0
+docker pull  docker.elastic.co/kibana/kibana:8.18.2
 ```
 
 Le reste de l'installation / configuration pourra se faire en séance :
