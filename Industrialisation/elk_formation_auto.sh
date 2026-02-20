@@ -22,6 +22,8 @@ v_filebeat_url="https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-$
 v_bin_filebeat="filebeat-${v_version}-linux-x86_64.tar.gz"
 v_metricbeat_url="https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-${v_version}-linux-x86_64.tar.gz"
 v_bin_metricbeat="metricbeat-${v_version}-linux-x86_64.tar.gz"
+v_elastic_agent_url="https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-${v_version}-linux-x86_64.tar.gz"
+v_bin_elastic_agent="elastic-agent-${v_version}-linux-x86_64.tar.gz"
 v_data_apache_logs_url="https://raw.githubusercontent.com/vincent2mots/elk/main/data/apache.logs"
 v_data_apache_logs="apache.logs"
 v_dir_conf_logstash=${v_dir_elastic}/logstash-${v_version}/config
@@ -112,6 +114,10 @@ telecharger ${v_filebeat_config_url} ${v_filebeat_config} ${v_dir_filebeat} "rie
 echo " 3. Metricbeat"
 telecharger ${v_metricbeat_url}  ${v_bin_metricbeat} ${v_dir_elastic} "untar"
 telecharger ${v_metricbeat_config_url} ${v_metricbeat_config} ${v_dir_metricbeat} "rien"
+
+# Elastic agent
+echo " 3 bis. Elastic Agent"
+telecharger ${v_elastic_agent_url}  ${v_bin_elastic_agent} ${v_dir_elastic} "untar"
 
 # Autres exercices
 echo " 4. Autres exercices"
