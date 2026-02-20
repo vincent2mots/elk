@@ -73,9 +73,10 @@ echo "Redemarrage de Docker"
 systemctl restart docker
 
 # Téléchargement des images Elasticsearch et Kibana
-echo "Telechargement des images elasticsearch et kibana"
+echo "Telechargement des images elasticsearch et kibana + fleet server (elastic agent)"
 docker pull docker.elastic.co/elasticsearch/elasticsearch:${v_version} --quiet
 docker pull docker.elastic.co/kibana/kibana:${v_version} --quiet
+docker pull docker.elastic.co/beats/elastic-agent:${v_version} --quiet
 
 # Création de la partie Portainer
 echo "Mise en place Portainer"
