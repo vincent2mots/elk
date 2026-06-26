@@ -16,7 +16,7 @@ Ce dépôt contient une série d'exercices pratiques pour maîtriser l'outil **L
 ### TP 2 : Répartition du CA par Sexe (Donut)
 * **Objectif** : Analyser la part des revenus selon le genre du client.
 * **Configuration** :
-    * Utiliser le type **Donut**.
+    * Utiliser le type **Pie**. Le type Donut n'existe pas mais un Donut = un Pie dans lequel on a mis un trou au milieu
     * Tranches (Slices) : Top values de `customer_gender`.
     * Taille : Somme de `taxless_total_price`.
     * *Astuce* : Dans les options d'affichage, activer les **pourcentages** dans la légende.
