@@ -66,4 +66,9 @@ Modifier le fichier **/home/user/elastic/filebeat-8.18.2-linux-x86_64/modules.d/
     #var.paths:
 ```
 
+On n'oublie pas de relancer l'agent : 
+``` sh
+./filebeat -e
+```
+
 Maintenant, retournez voir la donnée dans Kibana. Est-ce mieux?
