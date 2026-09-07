@@ -42,6 +42,8 @@ v_filebeat_config_url="https://raw.githubusercontent.com/vincent2mots/elk/main/B
 v_filebeat_config="filebeat.yml"
 v_dir_filebeat="${v_dir_elastic}/filebeat-${v_version}-linux-x86_64"
 v_portainer_password="Formation2023"
+v_portainer_version="2.39.7"
+v_portainer_public_ip="localhost"
 v_lisez_moi_url="https://raw.githubusercontent.com/vincent2mots/elk/main/Industrialisation/ELK.html"
 v_lisez_moi="ELK.html"
 
@@ -50,7 +52,7 @@ v_lisez_moi="ELK.html"
 telecharger() {
   # Premier parametre   : l'URL à télécharger
   # Deuxième parametre  : le nom du fichier telecharge
-  # Troisieme parametre : l'endroit ou le fichier sera telecharge 
+  # Troisieme parametre : l'endroit ou le fichier sera telecharge
   # Quatrième paramètre : si "unzip", le fichier est dézippé et supprimé ensuite
   wget --quiet ${1} -O ${3}/${2}
   if [ ${4} = "untar" ]; then
@@ -60,6 +62,64 @@ telecharger() {
   if [ ${4} = "unzip" ]; then
   	unzip -q ${3}/${2} -d ${v_dir_exercices}
   	#rm ${3}/${2}
+  fi
+}
+
+configurer_portainer() {
+  # Attend que l'API Portainer soit disponible, s'authentifie en admin,
+  # puis fixe l'IP publique de l'environnement "local" (utilisée par
+  # Portainer pour construire les liens vers les ports publiés) à
+  # ${v_portainer_public_ip} au lieu de la valeur par défaut (0.0.0.0).
+  #
+  # On passe ici par le port HTTP natif de Portainer (9000) plutot que
+  # par le port HTTPS (9443, certificat auto-signe) : ca evite d'avoir
+  # a gerer un certificat pour ces appels API, et c'est ce meme port
+  # HTTP que les stagiaires utiliseront pour ne plus avoir
+  # l'avertissement de securite du navigateur (cf. plus bas).
+  #
+  # IMPORTANT : quand l'admin est initialise de facon non-interactive
+  # via --admin-password-file (comme ici), Portainer NE CREE PAS
+  # automatiquement l'environnement "local" (ce qui n'est le cas que
+  # lors du parcours d'accueil manuel dans l'interface). On le cree
+  # donc nous-memes via l'API s'il n'existe pas encore.
+  local v_max_attempts=30
+  local v_attempt=0
+  local v_token=""
+
+  echo "Configuration de Portainer (environnement local + IP publique)"
+  until [ -n "${v_token}" ] || [ ${v_attempt} -ge ${v_max_attempts} ]; do
+    v_token=$(curl -s -X POST "http://localhost:9000/api/auth" \
+      -H "Content-Type: application/json" \
+      -d "{\"Username\":\"admin\",\"Password\":\"${v_portainer_password}\"}" \
+      | grep -oP '"jwt":"\K[^"]+')
+    if [ -z "${v_token}" ]; then
+      v_attempt=$((v_attempt + 1))
+      sleep 2
+    fi
+  done
+
+  if [ -z "${v_token}" ]; then
+    echo "Attention : API Portainer injoignable, l'environnement local devra etre configure manuellement"
+    return
+  fi
+
+  v_endpoint_id=$(curl -s -H "Authorization: Bearer ${v_token}" "http://localhost:9000/api/endpoints" | grep -oP '"Id":\K[0-9]+' | head -1)
+
+  if [ -z "${v_endpoint_id}" ]; then
+    # Aucun environnement existant : on cree le "local" (via le socket
+    # docker.sock monte dans le conteneur) avec directement la bonne IP
+    # publique.
+    curl -s -X POST "http://localhost:9000/api/endpoints" \
+      -H "Authorization: Bearer ${v_token}" \
+      -F "Name=local" \
+      -F "EndpointCreationType=1" \
+      -F "PublicURL=${v_portainer_public_ip}" > /dev/null
+  else
+    # Un environnement existe deja : on se contente de fixer son IP publique.
+    curl -s -X PUT "http://localhost:9000/api/endpoints/${v_endpoint_id}" \
+      -H "Authorization: Bearer ${v_token}" \
+      -H "Content-Type: application/json" \
+      -d "{\"PublicURL\":\"${v_portainer_public_ip}\"}" > /dev/null
   fi
 }
 
@@ -74,6 +134,15 @@ sysctl -w vm.max_map_count=262144
 echo "Redemarrage de Docker"
 systemctl restart docker
 
+# Suppression de tous les conteneurs existants (ex: reliquats d'une
+# session precedente relances automatiquement par le "restart=always"
+# lors du redemarrage de Docker), pour ne repartir qu'avec Portainer
+echo "Suppression des conteneurs existants"
+v_conteneurs_existants=$(docker ps -aq)
+if [ -n "${v_conteneurs_existants}" ]; then
+  docker rm -f ${v_conteneurs_existants}
+fi
+
 # Téléchargement des images Elasticsearch et Kibana
 echo "Telechargement des images elasticsearch et kibana + fleet server (elastic agent)"
 docker pull docker.elastic.co/elasticsearch/elasticsearch:${v_version} --quiet
@@ -81,9 +150,14 @@ docker pull docker.elastic.co/kibana/kibana:${v_version} --quiet
 docker pull docker.elastic.co/beats/elastic-agent:${v_version} --quiet
 
 # Création de la partie Portainer
+# Le port 9000 (HTTP natif de Portainer, sans certificat) est publié en plus
+# du 9443 (HTTPS auto-signe) : c'est celui qu'on donne aux stagiaires pour
+# ne plus avoir l'avertissement de certificat du navigateur.
 echo "Mise en place Portainer"
 echo -n Formation2023 > /tmp/portainer_password
-docker run -d -p 9443:9443 -p 8000:8000 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/portainer_password:/tmp/portainer_password portainer/portainer-ce:latest --admin-password-file /tmp/portainer_password
+docker pull portainer/portainer-ce:${v_portainer_version} --quiet
+docker run -d -p 9443:9443 -p 9000:9000 -p 8000:8000 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/portainer_password:/tmp/portainer_password portainer/portainer-ce:${v_portainer_version} --admin-password-file /tmp/portainer_password
+configurer_portainer
 
 # Creation des arborescences pour la formation
 echo "Creation des dossiers et recuperation des sources"

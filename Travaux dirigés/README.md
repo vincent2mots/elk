@@ -13,8 +13,9 @@
 ``` yml
 GET _cluster/health
 GET _cat/nodes?v
-GET _cat/indices?v
+GET _cat/indices?v&h=health,status,index,pri,rep,docs.count,store.size,pri.store.size
 GET _cat/shards?v
+GET _cat/shards/kibana_sample_data_ecommerce?v
 ```
 
 ### **Q2 : Sur l’appel API *GET _cat/indices?v*, quelle est la différence entre les colonnes *store.size* et *pri.store.size* ?**
