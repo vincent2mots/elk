@@ -144,7 +144,6 @@ services:
       timeout: 10s
       retries: 120
 
-
   kibana:
     depends_on:
       es01:
@@ -176,6 +175,22 @@ services:
       interval: 10s
       timeout: 10s
       retries: 120
+
+  load-sample-data:
+    depends_on:
+      kibana:
+        condition: service_healthy
+    image: curlimages/curl:latest
+    entrypoint: >
+      sh -c "
+        echo 'Attente de la disponibilité du serveur Kibana...';
+        until curl -s -u elastic:formation http://kibana:5601/api/status | grep -q '\"level\":\"available\"'; do sleep 5; done;
+        echo 'Chargement des datasets de démo...';
+        curl -s -u elastic:formation -X POST 'http://kibana:5601/api/sample_data/ecommerce' -H 'kbn-xsrf: true';
+        curl -s -u elastic:formation -X POST 'http://kibana:5601/api/sample_data/flights' -H 'kbn-xsrf: true';
+        curl -s -u elastic:formation -X POST 'http://kibana:5601/api/sample_data/logs' -H 'kbn-xsrf: true';
+        echo 'Datasets installés !';
+      "
 
 volumes:
   certs:
