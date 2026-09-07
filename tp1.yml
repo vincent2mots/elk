@@ -6,9 +6,9 @@ services:
     command: >
       bash -c '
         echo "Waiting for Elasticsearch availability";
-        until curl -s --cacert config/certs/ca/ca.crt http://elasticsearch:9200 | grep -q "missing authentication credentials"; do sleep 30; done;
+        until curl -s http://elasticsearch:9200 | grep -q "missing authentication credentials"; do sleep 10; done;
         echo "Setting kibana_system password";
-        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:formation -H "Content-Type: application/json" http://elasticsearch:9200/_security/user/kibana_system/_password -d "{\"password\":\"formation\"}" | grep -q "^{}"; do sleep 10; done;
+        until curl -s -X POST -u elastic:formation -H "Content-Type: application/json" http://elasticsearch:9200/_security/user/kibana_system/_password -d "{\"password\":\"formation\"}" | grep -q "^{}"; do sleep 10; done;
         echo "All done!";
       '
 
@@ -47,6 +47,21 @@ services:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
       - ELASTICSEARCH_USERNAME=kibana_system
       - ELASTICSEARCH_PASSWORD=formation
+
+  load-sample-data:
+    depends_on:
+      - kibana
+    image: curlimages/curl:latest
+    entrypoint: >
+      sh -c "
+        echo 'Attente de la disponibilité de Kibana...';
+        until curl -s -u elastic:formation http://kibana:5601/api/status | grep -q '\"level\":\"available\"'; do sleep 5; done;
+        echo 'Chargement des jeux de données de démo...';
+        curl -s -u elastic:formation -X POST 'http://kibana:5601/api/sample_data/ecommerce' -H 'kbn-xsrf: true';
+        curl -s -u elastic:formation -X POST 'http://kibana:5601/api/sample_data/flights' -H 'kbn-xsrf: true';
+        curl -s -u elastic:formation -X POST 'http://kibana:5601/api/sample_data/logs' -H 'kbn-xsrf: true';
+        echo 'Datasets installés !';
+      "
 
 volumes:
   esdata1_830_tp1:
