@@ -24,8 +24,8 @@ Ce dépôt contient une série d'exercices pratiques pour maîtriser l'outil **L
 ### TP 3 : Chronologie des ventes (Histogramme)
 * **Objectif** : Visualiser la répartition des commandes dans le temps.
 * **Configuration** :
-    * Axe X : `order_date`.
-    * Axe Y : `Count`.
+    * Axe horizontal : `order_date`.
+    * Axe vertical : `Count`.
     * *Réglage* : Forcer l'intervalle de temps à **Daily** (Journalier) au lieu de "Auto".
 
 ---
@@ -35,7 +35,7 @@ Ce dépôt contient une série d'exercices pratiques pour maîtriser l'outil **L
 ### TP 4 : Corrélation CA vs Quantité (Combo Chart)
 * **Objectif** : Comparer le montant des ventes et le volume d'articles vendus.
 * **Configuration** :
-    * Axe X : `order_date`.
+    * Axe horizontal : `order_date`.
     * Couche 1 (Barres) : Somme de `taxless_total_price`.
     * Couche 2 (Ligne) : Somme de `total_quantity`.
     * **Important** : Configurer la couche "Ligne" sur un **axe Y secondaire** (à droite) pour éviter que la courbe ne soit écrasée.
