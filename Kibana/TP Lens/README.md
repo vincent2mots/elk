@@ -1,6 +1,6 @@
 # 🎓 Travaux Pratiques : Visualisation avec Kibana Lens
 
-Ce dépôt contient une série d'exercices pratiques pour maîtriser l'outil **Lens** dans Kibana, en utilisant le jeu de données d'exemple `kibana_sample_data_ecommerce`.
+Ce dépôt contient une série d'exercices pratiques pour maîtriser l'outil **Lens** dans Kibana, en utilisant les jeux de données d'exemple `kibana_sample_data_ecommerce`, `kibana_sample_data_logs` et `kibana_sample_data_flights`.
 
 ---
 
@@ -81,6 +81,69 @@ Ce dépôt contient une série d'exercices pratiques pour maîtriser l'outil **L
 
 ---
 
+## 📡 Niveau 4 : Visualisation de logs *(nouveau)*
+
+### TP 10 : Répartition des codes retour dans le temps (Bar vertical empilé)
+* **Objectif** : Visualiser le volume de requêtes par heure, empilé par famille de code retour.
+* **Configuration** :
+    * Type **Bar vertical stacked**.
+    * Axe horizontal : `@timestamp` (intervalle **Hourly**).
+    * Breakdown : `response.keyword` (Top values).
+    * Axe vertical : `Count`.
+
+### TP 11 : Carte des origines de trafic (Map)
+* **Objectif** : Localiser géographiquement le volume de requêtes.
+* **Configuration** :
+    * Type **Maps** (ou visualisation Lens de type carte si disponible dans votre licence).
+    * Champ géo-point : `geo.coordinates`.
+    * Métrique : `Count`, symbolisée par taille de bulle.
+
+### TP 12 : Table des user-agents les plus fréquents avec formatage conditionnel
+* **Objectif** : Repérer rapidement les navigateurs générant le plus d'erreurs.
+* **Configuration** :
+    * Lignes : `machine.os.keyword` (Top 10).
+    * Métriques : `Count` et **Formula** `count(kql='response >= 400') / count()` pour le taux d'erreur.
+    * Formatage conditionnel (couleur) sur la colonne taux d'erreur.
+
+---
+
+## ✈️ Niveau 5 : Séries temporelles et comparaisons *(nouveau)*
+
+### TP 13 : Retards moyens par compagnie (Bar horizontal + Formula)
+* **Objectif** : Comparer visuellement les compagnies selon leur retard moyen.
+* **Configuration** :
+    * Type **Bar horizontal**.
+    * Axe : `Carrier.keyword`.
+    * Métrique : **Formula** `average(FlightDelayMin)`, format numérique avec 1 décimale et suffixe "min".
+
+### TP 14 : Prix moyen du billet vs distance (Combo / Scatter)
+* **Objectif** : Visualiser la corrélation entre distance parcourue et prix moyen.
+* **Configuration** :
+    * Type **XY** en nuage de points si disponible, sinon Combo chart avec deux métriques sur le même axe temporel : `Average(DistanceKilometers)` et `Average(AvgTicketPrice)` sur axes Y primaire/secondaire.
+
+---
+
+## 🧮 Niveau 6 : Lens propulsé par ES|QL *(nouveau, v9)*
+
+### TP 15 : Visualisation "Lens ES|QL" : atterrir directement sur un résultat de requête
+* **Objectif** : Construire une visualisation Lens directement à partir d'une requête ES|QL plutôt qu'en glisser-déposer visuel — pont concret entre ES|QL et Lens.
+* **Configuration** :
+    * Créer une nouvelle visualisation Lens, choisir le mode **ES|QL**.
+    * Coller la requête suivante (reprise du TP ES|QL "Taux de retard par compagnie") :
+      ```esql
+      FROM kibana_sample_data_flights
+      | STATS
+          nb_vols          = COUNT(*),
+          nb_retards       = COUNT(*) WHERE FlightDelay == true
+        BY Carrier
+      | EVAL taux_retard_pct = ROUND(nb_retards * 100.0 / nb_vols, 1)
+      | SORT taux_retard_pct DESC
+      ```
+    * Mapper `Carrier` en axe horizontal et `taux_retard_pct` en métrique, type **Bar**.
+* **À savoir** : si vous modifiez la requête ES|QL par la suite, Lens essaie de conserver la configuration (axes, couleurs) tant que la structure du résultat reste compatible. Limite à connaître : les drilldowns ne fonctionnent que sur des valeurs adossées à un vrai champ d'index, pas sur une colonne calculée (`EVAL`/`STATS`).
+
+---
+
 ## 🛠 Prérequis
-1. Disposer d'une instance Elasticsearch & Kibana.
-2. Charger les données de test : Accueil Kibana > **Add data** > **Sample eCommerce orders**.
+1. Disposer d'une instance Elasticsearch & Kibana (v9 pour le Niveau 6).
+2. Charger les données de test : Accueil Kibana > **Add data** > *Sample eCommerce orders* (Niveaux 1-3), *Sample web logs* (Niveau 4), *Sample flight data* (Niveaux 5-6).
