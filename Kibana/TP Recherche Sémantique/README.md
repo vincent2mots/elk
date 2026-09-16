@@ -49,7 +49,8 @@
   // Recherche mot-clé classique (BM25) sur "description"
   GET /tickets_support/_search
   {
-    "query": { "match": { "description": "ma voiture ne veut pas démarrer" } }
+    "query": { "match": { "description": "ma voiture ne veut pas démarrer" } },
+    "highlight": { "fields": {"description":{}}}
   }
 
   // Recherche sémantique sur "description_semantic" — même requête, même documents sources

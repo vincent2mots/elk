@@ -46,6 +46,9 @@ v_portainer_version="2.39.7"
 v_portainer_public_ip="localhost"
 v_lisez_moi_url="https://raw.githubusercontent.com/vincent2mots/elk/main/Industrialisation/ELK.html"
 v_lisez_moi="ELK.html"
+v_repo_url="https://github.com/vincent2mots/elk.git"
+v_repo_ref="refs/heads/main"
+v_stacks_tp="tp1 tp2 tp3"
 
 
 # Fonctions
@@ -123,6 +126,92 @@ configurer_portainer() {
   fi
 }
 
+importer_stacks_tp() {
+  # Pré-importe dans Portainer les stacks de TP (tp1.yml, tp2.yml, tp3.yml)
+  # depuis le depot Git, exactement comme la procedure manuelle decrite
+  # dans Portainer/README.md (build "Repository", meme URL de depot, meme
+  # chemin de fichier compose) : le stagiaire n'a alors plus qu'a cliquer
+  # sur "Start" au lieu de remplir le formulaire de creation de stack.
+  #
+  # Contrainte : tp1/tp2/tp3 publient tous le port 9200 (tp1 et tp3
+  # publient en plus le 5601), donc une seule stack peut tourner a la
+  # fois. On les traite donc une par une : creation -> attente de la fin
+  # du deploiement initial (Portainer fait l'equivalent d'un
+  # "docker compose up -d", ce qui telecharge les images si besoin) ->
+  # arret immediat (equivalent a un "docker compose down", ce qui libere
+  # les ports) -> stack suivante. A la fin, les 3 stacks existent dans
+  # Portainer a l'etat "Inactive" : conforme a la consigne de ne laisser
+  # tourner que Portainer automatiquement, tout en ayant deja les images
+  # en cache local pour que le "Start" du stagiaire soit rapide.
+  local v_max_attempts=30
+  local v_attempt=0
+  local v_token=""
+
+  echo "Import des stacks ${v_stacks_tp} dans Portainer"
+
+  until [ -n "${v_token}" ] || [ ${v_attempt} -ge ${v_max_attempts} ]; do
+    v_token=$(curl -s -X POST "http://localhost:9000/api/auth" \
+      -H "Content-Type: application/json" \
+      -d "{\"Username\":\"admin\",\"Password\":\"${v_portainer_password}\"}" \
+      | grep -oP '"jwt":"\K[^"]+')
+    if [ -z "${v_token}" ]; then
+      v_attempt=$((v_attempt + 1))
+      sleep 2
+    fi
+  done
+
+  if [ -z "${v_token}" ]; then
+    echo "Attention : API Portainer injoignable, les stacks ${v_stacks_tp} devront etre creees manuellement"
+    return
+  fi
+
+  local v_endpoint_id
+  v_endpoint_id=$(curl -s -H "Authorization: Bearer ${v_token}" "http://localhost:9000/api/endpoints" | grep -oP '"Id":\K[0-9]+' | head -1)
+
+  if [ -z "${v_endpoint_id}" ]; then
+    echo "Attention : environnement local introuvable, les stacks ${v_stacks_tp} devront etre creees manuellement"
+    return
+  fi
+
+  local v_stack
+  for v_stack in ${v_stacks_tp}; do
+    echo " - Creation de la stack ${v_stack}"
+    local v_stack_id
+    v_stack_id=$(curl -s -X POST "http://localhost:9000/api/stacks/create/standalone/repository?endpointId=${v_endpoint_id}" \
+      -H "Authorization: Bearer ${v_token}" \
+      -H "Content-Type: application/json" \
+      -d "{\"Name\":\"${v_stack}\",\"RepositoryURL\":\"${v_repo_url}\",\"RepositoryReferenceName\":\"${v_repo_ref}\",\"ComposeFile\":\"${v_stack}.yml\"}" \
+      | grep -oP '"Id":\K[0-9]+' | head -1)
+
+    if [ -z "${v_stack_id}" ]; then
+      echo "   Attention : echec de la creation de la stack ${v_stack}, elle devra etre creee manuellement"
+      continue
+    fi
+
+    # La creation declenche un deploiement asynchrone cote Portainer (statut
+    # 3 = "Deploying" le temps que les conteneurs demarrent). On attend que
+    # ca se termine (statut 1 = Active, ou 4 = Error) avant d'arreter.
+    local v_status=3
+    local v_deploy_attempt=0
+    local v_max_deploy_attempts=120
+    while [ "${v_status}" = "3" ] && [ ${v_deploy_attempt} -lt ${v_max_deploy_attempts} ]; do
+      sleep 5
+      v_status=$(curl -s -H "Authorization: Bearer ${v_token}" "http://localhost:9000/api/stacks/${v_stack_id}" | grep -oP '"Status":\K[0-9]+' | head -1)
+      v_deploy_attempt=$((v_deploy_attempt + 1))
+    done
+
+    if [ "${v_status}" = "1" ]; then
+      # Stack active -> on l'arrete tout de suite (equivalent
+      # "docker compose down", libere les ports pour la stack suivante)
+      curl -s -X POST "http://localhost:9000/api/stacks/${v_stack_id}/stop?endpointId=${v_endpoint_id}" \
+        -H "Authorization: Bearer ${v_token}" > /dev/null
+      echo "   Stack ${v_stack} importee et prete (arretee, ports liberes)"
+    else
+      echo "   Attention : la stack ${v_stack} n'a pas demarre correctement (statut ${v_status}), verifier manuellement dans Portainer"
+    fi
+  done
+}
+
 # Ménage avant installation
 if [ -d "$v_dir_elastic" ]; then rm -Rf $v_dir_elastic; fi
 
@@ -158,6 +247,7 @@ echo -n Formation2023 > /tmp/portainer_password
 docker pull portainer/portainer-ce:${v_portainer_version} --quiet
 docker run -d -p 9443:9443 -p 9000:9000 -p 8000:8000 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/portainer_password:/tmp/portainer_password portainer/portainer-ce:${v_portainer_version} --admin-password-file /tmp/portainer_password
 configurer_portainer
+importer_stacks_tp
 
 # Creation des arborescences pour la formation
 echo "Creation des dossiers et recuperation des sources"
