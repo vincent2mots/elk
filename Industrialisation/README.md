@@ -20,6 +20,11 @@ sudo ./elk_formation_auto.sh ${HOME} ${USER}
 cd ~ && wget https://raw.githubusercontent.com/vincent2mots/elk/main/Industrialisation/elk_formation_auto.sh -O elk_formation_auto.sh && sudo chmod +x elk_formation_auto.sh && sudo ./elk_formation_auto.sh ${HOME} ${USER}
 ```
 
+## Mot de passe Rustdesk : 
+``` sh
+Orsys-elkcv1
+```
+
 ## Page d'accueil :
 Une fois le tout bien installé, ouvrir le fichier ELK.html suivant et se laisser guider :
 
