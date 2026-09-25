@@ -150,6 +150,36 @@ Respecter ECS, c'est ce qui fait fonctionner **sans adaptation** les dashboards,
 * **À observer** : le résultat contient les settings et les mappings fusionnés. Le champ `overlapping` liste les templates qui correspondaient aussi au nom mais ont **perdu** face à celui-ci.
 * **Vérification** : rejouer le document du TP 1 dans `tp-logs-2026.09.02`, puis rejouer les trois requêtes du TP 2. Elles fonctionnent toutes, et le document du TP 3 est accepté.
 
+Les requêtes à rejouer : 
+  ```json
+POST tp-logs-avec-template/_doc
+{
+  "@timestamp": "2026-09-02T06:00:00Z",
+  "host":   { "ip": "10.0.0.12" },
+  "source": { "ip": "81.250.12.4", "geo": { "location": { "lat": 48.85, "lon": 2.35 } } },
+  "url":    { "path": "/api/orders/42" },
+  "error":  { "type": 500 },
+  "message": "GET /api/orders/42 500"
+}
+
+GET tp-logs-avec-template
+
+
+
+# a) Agrégation sur un champ text → maintenant ok
+GET tp-logs-avec-template/_search
+{ "size": 0, "aggs": { "top_urls": { "terms": { "field": "url.path" } } } }
+
+# b) Recherche par plage d'IP → renvoie bien le document
+GET tp-logs-avec-template/_search
+{ "query": { "term": { "source.ip": "81.250.0.0/16" } } }
+
+# c) Requête géographique → ok aussi
+GET tp-logs-avec-template/_search
+{ "query": { "geo_distance": { "distance": "10km",
+    "source.geo.location": { "lat": 48.85, "lon": 2.35 } } } }
+  ```
+
 ### TP 6 : Un seul template gagne
 * **Objectif** : Comprendre la règle de priorité des templates composables.
 * **Commandes** :
