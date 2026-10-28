@@ -6,6 +6,8 @@ Cette série d'exercices montre **pourquoi le rollover a changé la manière de 
 
 Tous les exercices se font dans **Dev Tools**, sauf le TP 9 (papier ou tableur). Ils s'appuient sur le jeu de démo **Sample web logs** (`kibana_sample_data_logs`), à installer depuis la page d'accueil de Kibana.
 
+> ℹ️ Selon la version de Kibana, la date des documents de ce jeu est stockée dans `@timestamp` ou dans `timestamp`. Les scripts de réindexation gèrent les deux cas. Pour vérifier : `GET kibana_sample_data_logs/_search?size=1&_source=*timestamp*`
+
 ---
 
 ## 📚 Rappels express
@@ -57,11 +59,11 @@ PUT _cluster/settings
 
   POST _reindex
   { "source": { "index": "kibana_sample_data_logs" }, "dest": { "index": "tp-standard" },
-    "script": { "source": "ctx._source['@timestamp'] = ctx._source.timestamp" } }
+    "script": { "source": "if (ctx._source['@timestamp'] == null) { ctx._source['@timestamp'] = ctx._source.timestamp }" } }
 
   POST _reindex
   { "source": { "index": "kibana_sample_data_logs" }, "dest": { "index": "tp-logsdb" },
-    "script": { "source": "ctx._source['@timestamp'] = ctx._source.timestamp" } }
+    "script": { "source": "if (ctx._source['@timestamp'] == null) { ctx._source['@timestamp'] = ctx._source.timestamp }" } }
 
   POST tp-standard,tp-logsdb/_forcemerge?max_num_segments=1
   GET _cat/indices/tp-standard,tp-logsdb?v&h=index,docs.count,pri.store.size
@@ -126,7 +128,7 @@ PUT _cluster/settings
   POST _reindex
   { "source": { "index": "kibana_sample_data_logs" },
     "dest":   { "index": "tp-daily" },
-    "script": { "source": "ctx._index = 'tp-daily-' + ctx._source.timestamp.substring(0,10)" } }
+    "script": { "source": "def ts = ctx._source['@timestamp'] != null ? ctx._source['@timestamp'] : ctx._source.timestamp; ctx._index = 'tp-daily-' + ts.toString().substring(0,10)" } }
 
   GET _cat/indices/tp-daily-*?v&h=index,docs.count,pri.store.size&s=index
   GET _cat/shards/tp-daily-*?h=index&format=json&filter_path=**.index
@@ -182,7 +184,7 @@ PUT _cluster/settings
   { "source": { "index": "kibana_sample_data_logs",
                 "query": { "term": { "machine.os.keyword": "win 8" } } },
     "dest":   { "index": "tp-ds-weblogs", "op_type": "create" },
-    "script": { "source": "ctx._source['@timestamp'] = ctx._source.timestamp" } }
+    "script": { "source": "if (ctx._source['@timestamp'] == null) { ctx._source['@timestamp'] = ctx._source.timestamp }" } }
   ```
 * **Étape 3 — observer** :
   ```json
