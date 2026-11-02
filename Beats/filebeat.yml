@@ -146,10 +146,10 @@ output.elasticsearch:
   
   ssl.verification_mode: none
 
-  index: "apache-avec-filebeat-%{[agent.version]}-%{+YYYY.MM.dd}"
+  index: "apache-avec-filebeat"
 
-setup.template.name: "apache-avec-filebeat-%{[agent.version]}-%{+YYYY.MM.dd}"
-setup.template.pattern: "apache-avec-filebeat-%{[agent.version]}-%{+YYYY.MM.dd}"
+setup.template.name: "apache-avec-filebeat"
+setup.template.pattern: "apache-avec-filebeat"
 
 # ------------------------------ Logstash Output -------------------------------
 #output.logstash:
