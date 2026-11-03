@@ -46,7 +46,7 @@ Ce dépôt contient une série d'exercices pratiques pour maîtriser l'outil **L
     * Type : **Metric**.
     * Mesure : Sélectionner **Formula**.
     * Syntaxe : `sum(taxless_total_price) / sum(total_quantity)`.
-    * Formatage : Définir le format d'affichage en **Currency** (€).
+    * Formatage : Définir le format d'affichage en **Number** ( avec le suffixe "€").
 
 ### TP 6 : Tracking du dernier client (Last Value)
 * **Objectif** : Identifier dynamiquement le nom du dernier acheteur.
