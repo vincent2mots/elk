@@ -1,75 +1,242 @@
-<html>
-<head><title>Formation ELK</title></head>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Formation ELK</title>
+<style>
+  :root {
+    --bg: #f4f6fa;
+    --card: #ffffff;
+    --ink: #1c2333;
+    --muted: #5f6b80;
+    --line: #e3e7ef;
+    --accent: #0b7c86;
+    --accent-soft: #e2f3f4;
+    --warn-bg: #fff6e0;
+    --warn-ink: #7a5300;
+    --code-bg: #f1f3f7;
+    --ok: #1f8a4c;
+    --shadow: 0 1px 2px rgba(20,30,50,.06), 0 4px 16px rgba(20,30,50,.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #11151c;
+      --card: #1a2029;
+      --ink: #e6eaf1;
+      --muted: #9aa5b8;
+      --line: #2a323e;
+      --accent: #3cc4cf;
+      --accent-soft: #173238;
+      --warn-bg: #2e2612;
+      --warn-ink: #f0c869;
+      --code-bg: #232a35;
+      --ok: #4cc983;
+      --shadow: none;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 15px/1.55 system-ui, -apple-system, "Segoe UI", Ubuntu, Roboto, sans-serif;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 40px 20px 60px; }
+
+  header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
+  .logo {
+    width: 52px; height: 52px; border-radius: 14px; flex: none;
+    background: var(--accent); color: #fff;
+    display: grid; place-items: center;
+    font-weight: 800; font-size: 18px; letter-spacing: .5px;
+  }
+  h1 { margin: 0; font-size: 26px; line-height: 1.2; }
+  header p { margin: 2px 0 0; color: var(--muted); }
+
+  h2 {
+    font-size: 13px; text-transform: uppercase; letter-spacing: .08em;
+    color: var(--muted); margin: 36px 0 12px;
+  }
+
+  /* Liens rapides */
+  .links { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .link {
+    display: block; text-decoration: none; color: inherit;
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 16px 18px; box-shadow: var(--shadow);
+    transition: border-color .15s, transform .15s;
+  }
+  .link:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .link strong { display: block; font-size: 16px; }
+  .link span { display: block; color: var(--muted); font-size: 13px; }
+  .link code { display: block; margin-top: 8px; color: var(--accent); font-size: 12.5px; overflow-wrap: anywhere; }
+
+  /* Cartes */
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 18px 20px; box-shadow: var(--shadow);
+  }
+  .card h3 { margin: 0 0 4px; font-size: 16px; }
+  .card .sub { margin: 0 0 12px; color: var(--muted); font-size: 13px; }
+
+  .field { display: flex; align-items: center; gap: 10px; padding: 6px 0; }
+  .field + .field { border-top: 1px dashed var(--line); }
+  .field label { width: 110px; flex: none; color: var(--muted); font-size: 13px; }
+  .field code {
+    flex: 1; min-width: 0; overflow-wrap: anywhere;
+    background: var(--code-bg); border-radius: 6px; padding: 5px 9px;
+    font: 14px/1.4 ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  }
+
+  button.copy {
+    flex: none; cursor: pointer;
+    border: 1px solid var(--line); background: var(--card); color: var(--ink);
+    border-radius: 7px; padding: 5px 11px; font: inherit; font-size: 13px;
+    transition: background .15s, color .15s, border-color .15s;
+  }
+  button.copy:hover { border-color: var(--accent); color: var(--accent); }
+  button.copy.done { background: var(--ok); border-color: var(--ok); color: #fff; }
+
+  /* Stacks */
+  .stacks { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .stack .tag {
+    display: inline-block; background: var(--accent-soft); color: var(--accent);
+    font-weight: 700; font-size: 12px; border-radius: 999px; padding: 2px 10px; margin-bottom: 8px;
+  }
+  .ports { margin-top: 10px; color: var(--muted); font-size: 13px; }
+
+  .note {
+    margin-top: 12px; padding: 12px 16px; border-radius: 10px;
+    background: var(--warn-bg); color: var(--warn-ink); font-size: 14px;
+  }
+  .steps { margin: 0; padding-left: 20px; }
+  .steps li { margin: 4px 0; }
+
+  footer { margin-top: 40px; color: var(--muted); font-size: 13px; text-align: center; }
+</style>
+</head>
 <body>
-<p><span style="font-size:18px;"><span style="color:#2980b9;"><strong>LIENS UTILES PENDANT LA FORMATION :</strong></span></span></p>
+<div class="wrap">
 
-<p>Le Github avec les exercices : <a href="https://github.com/vincent2mots/elk" target="_blank">https://github.com/vincent2mots/elk</a><br />
-Le lien vers Portainer en local : <a href="http://localhost:9000" target="_blank">http://localhost:9000</a></p>
+  <header>
+    <div class="logo">ELK</div>
+    <div>
+      <h1>Formation Elastic Stack</h1>
+      <p>Tout ce qu'il vous faut pendant la formation, sur une seule page.</p>
+    </div>
+  </header>
 
-<p>Compte et mot de passe pour acc&eacute;der &agrave; Portainer :</p>
+  <h2>Accès rapides</h2>
+  <div class="links">
+    <a class="link" href="http://localhost:9000" target="_blank">
+      <strong>Portainer</strong>
+      <span>Gestion des conteneurs et des stacks</span>
+      <code>localhost:9000</code>
+    </a>
+    <a class="link" href="http://localhost:5601" target="_blank">
+      <strong>Kibana</strong>
+      <span>Visualisation et administration</span>
+      <code>localhost:5601</code>
+    </a>
+    <a class="link" href="http://localhost:9200/_cat/nodes?v" target="_blank">
+      <strong>Nœuds Elasticsearch</strong>
+      <span>Utile pendant le TP 2</span>
+      <code>localhost:9200/_cat/nodes?v</code>
+    </a>
+    <a class="link" href="https://github.com/vincent2mots/elk" target="_blank">
+      <strong>Exercices (GitHub)</strong>
+      <span>Énoncés, fichiers et corrigés</span>
+      <code>github.com/vincent2mots/elk</code>
+    </a>
+  </div>
 
-<table border="0">
-<tr>
-	<td>Compte : </td><td><input type="text" value="admin" id="input_compte" disabled size="13"></td><td><button onclick="copy('input_compte')">Copier</button></td>
-</tr>
-<tr>
-	<td>Mot de passe : </td><td><input type="text" value="Formation2023" id="input_password" disabled size="13"></td><td><button onclick="copy('input_password')">Copier</button></td>
-</tr>
-</table>
+  <h2>Identifiants</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>Portainer</h3>
+      <p class="sub">Connexion à l'interface Portainer</p>
+      <div class="field"><label>Compte</label><code>admin</code><button class="copy">Copier</button></div>
+      <div class="field"><label>Mot de passe</label><code>Formation2023</code><button class="copy">Copier</button></div>
+    </div>
+    <div class="card">
+      <h3>Elasticsearch / Kibana</h3>
+      <p class="sub">Accès aux clusters Elasticsearch locaux</p>
+      <div class="field"><label>Compte</label><code>elastic</code><button class="copy">Copier</button></div>
+      <div class="field"><label>Mot de passe</label><code>formation</code><button class="copy">Copier</button></div>
+    </div>
+  </div>
 
-<hr />
-<p><span style="font-size:18px;"><span style="color:#3498db;"><strong>CONFIGURATION PORTAINER :</strong></span></span></p>
+  <h2>Stacks des TP</h2>
+  <div class="card" style="margin-bottom:12px">
+    <h3>Démarrer un TP</h3>
+    <ol class="steps">
+      <li>Ouvrez <strong>Portainer</strong>, puis l'environnement <strong>local</strong> et le menu <strong>Stacks</strong>.</li>
+      <li>Les stacks <strong>tp1</strong>, <strong>tp2</strong> et <strong>tp3</strong> sont déjà créées : cliquez sur celle du TP, puis sur <strong>Start this stack</strong>.</li>
+      <li>À la fin du TP, cliquez sur <strong>Stop this stack</strong> avant de passer au suivant.</li>
+    </ol>
+    <div class="note">Une seule stack à la fois : les trois utilisent le port 9200 (et 5601 pour tp1 et tp3).</div>
+  </div>
 
-<p>URL du r&eacute;f&eacute;rentiel Git &agrave; reprendre dans Portainer&nbsp;: <input type="text" value="https://github.com/vincent2mots/elk.git" id="input_git_url" disabled size="30"><button onclick="copy('input_git_url')">Copier</button></p>
+  <div class="stacks">
+    <div class="card stack">
+      <span class="tag">TP 1</span>
+      <div class="field"><code>tp1.yml</code><button class="copy">Copier</button></div>
+      <div class="ports">Ports : 9200 · 5601</div>
+    </div>
+    <div class="card stack">
+      <span class="tag">TP 2</span>
+      <div class="field"><code>tp2.yml</code><button class="copy">Copier</button></div>
+      <div class="ports">Port : 9200</div>
+    </div>
+    <div class="card stack">
+      <span class="tag">TP 3</span>
+      <div class="field"><code>tp3.yml</code><button class="copy">Copier</button></div>
+      <div class="ports">Ports : 9200 · 5601</div>
+    </div>
+  </div>
 
-<p>Les 3 docker compose utiles pendant la formation :</p>
+  <div class="card" style="margin-top:12px">
+    <h3>Recréer une stack à la main</h3>
+    <p class="sub">Seulement si une stack a disparu : Stacks → Add stack → Repository</p>
+    <div class="field"><label>URL du dépôt</label><code>https://github.com/vincent2mots/elk.git</code><button class="copy">Copier</button></div>
+    <div class="field"><label>Référence</label><code>refs/heads/main</code><button class="copy">Copier</button></div>
+    <div class="field"><label>Fichier compose</label><code>tp1.yml, tp2.yml ou tp3.yml</code></div>
+  </div>
 
-<table border="0">
-	<tr>
-		<td><li></li></td><td>TP 1 : </td><td><input type="text" value="tp1.yml" id="input_tp1" disabled size="8"></td><td><button onclick="copy('input_tp1')">Copier</button></td>
-	</tr>
-	<tr>
-		<td><li></li></td><td>TP 2 : </td><td><input type="text" value="tp2.yml" id="input_tp2" disabled size="8"></td><td><button onclick="copy('input_tp2')">Copier</button></td>
-	</tr>
-	<tr>
-		<td><li></li></td><td>TP 3 : </td><td><input type="text" value="tp3.yml" id="input_tp3" disabled size="8"></td><td><button onclick="copy('input_tp3')">Copier</button></td>
-	</tr>
-</table>
-	
-
-<hr />
-<p><span style="color:#3498db;"><span style="font-size:18px;"><strong>LES AUTRES COMPTES / MOT DE PASSE :</strong></span></span></p>
-
-<p>Compte pour acc&eacute;der aux clusters Elasticsearch locaux :</p>
-
-<table border="0">
-	<tr>
-		<td>Compte : </td><td><input type="text" value="elastic" id="input_compte_elastic" disabled size="13"></td><td><button onclick="copy('input_compte_elastic')">Copier</button></td>
-	</tr>
-	<tr>
-		<td>Mot de passe : </td><td><input type="text" value="formation" id="input_password_elastic" disabled size="13"></td><td><button onclick="copy('input_password_elastic')">Copier</button></td>
-	</tr>
-	</table>
-
-<hr />
-Votre lien vers Kibana : <a href="http://localhost:5601" target="_blank">http://localhost:5601</a>
-<hr />
-Un autre lien utile pendant la formation (TP 2) : <a href="http://localhost:9200/_cat/nodes?v" target="_blank">http://localhost:9200/_cat/nodes?v</a></p>
+  <footer>Bonne formation !</footer>
+</div>
 
 <script>
-	function copy(elemendId) {
-		var copyText = document.getElementById(elemendId);
-		// Select the text field
-		copyText.select();
-		copyText.setSelectionRange(0, 99999); // For mobile devices
+  function copier(texte) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(texte);
+    }
+    // Repli pour les navigateurs qui refusent l'API presse-papiers en file://
+    var zone = document.createElement("textarea");
+    zone.value = texte;
+    zone.style.position = "fixed";
+    zone.style.opacity = "0";
+    document.body.appendChild(zone);
+    zone.select();
+    try { document.execCommand("copy"); } finally { document.body.removeChild(zone); }
+    return Promise.resolve();
+  }
 
-		// Copy the text inside the text field
-		navigator.clipboard.writeText(copyText.value);
-
-		// Alert the copied text
-		//alert("Copied the text: " + copyText.value);
-	}
+  document.querySelectorAll("button.copy").forEach(function (bouton) {
+    bouton.addEventListener("click", function () {
+      var texte = bouton.parentElement.querySelector("code").textContent.trim();
+      copier(texte).then(function () {
+        bouton.textContent = "Copié ✓";
+        bouton.classList.add("done");
+        setTimeout(function () {
+          bouton.textContent = "Copier";
+          bouton.classList.remove("done");
+        }, 1500);
+      });
+    });
+  });
 </script>
-
 </body>
 </html>
