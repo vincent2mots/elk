@@ -40,6 +40,11 @@ services:
           bin/elasticsearch-certutil cert --silent --pem -out config/certs/certs.zip --in config/certs/instances.yml --ca-cert config/certs/ca/ca.crt --ca-key config/certs/ca/ca.key;
           unzip config/certs/certs.zip -d config/certs;
         fi;
+        if [ ! -f config/certs/fleet-server/fleet-server.crt ]; then
+          echo "Creating Fleet Server cert";
+          bin/elasticsearch-certutil cert --silent --pem -out config/certs/fleet.zip --name fleet-server --dns fleet-server,localhost --ip 127.0.0.1 --ca-cert config/certs/ca/ca.crt --ca-key config/certs/ca/ca.key;
+          unzip config/certs/fleet.zip -d config/certs;
+        fi;
         echo "Setting file permissions"
         chown -R root:root config/certs;
         find . -type d -exec chmod 750 \{\} \;;
@@ -51,7 +56,7 @@ services:
         echo "All done!";
       '
     healthcheck:
-      test: ["CMD-SHELL", "[ -f config/certs/es01/es01.crt ]"]
+      test: ["CMD-SHELL", "[ -f config/certs/fleet-server/fleet-server.crt ]"]
       interval: 1s
       timeout: 5s
       retries: 120
@@ -158,6 +163,7 @@ services:
       - 5601:5601
     environment:
       - SERVERNAME=kibana
+      # Kibana connait les 2 noeuds : si es01 tombe, il bascule sur es02
       - 'ELASTICSEARCH_HOSTS=["https://es01:9200","https://es02:9200"]'
       - ELASTICSEARCH_USERNAME=kibana_system
       - ELASTICSEARCH_PASSWORD=formation
@@ -191,6 +197,65 @@ services:
         curl -s -u elastic:formation -X POST 'http://kibana:5601/api/sample_data/logs' -H 'kbn-xsrf: true';
         echo 'Datasets installés !';
       "
+
+  # Configure Fleet dans Kibana : sortie Elasticsearch (avec la CA),
+  # URL du Fleet Server et politique "Fleet Server Policy".
+  # Les erreurs 409 au redemarrage de la stack sont normales (deja cree).
+  fleet-setup:
+    depends_on:
+      kibana:
+        condition: service_healthy
+    image: curlimages/curl:latest
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        echo 'Attente de Kibana...'
+        until curl -s -u elastic:formation http://kibana:5601/api/status | grep -q '"level":"available"'; do sleep 5; done
+        echo 'Initialisation de Fleet...'
+        until curl -s -u elastic:formation -X POST http://kibana:5601/api/fleet/setup -H 'kbn-xsrf: true' | grep -q '"isInitialized":true'; do sleep 5; done
+        echo 'Sortie Elasticsearch par defaut (es01 + es02, CA du cluster)'
+        curl -s -u elastic:formation -X POST http://kibana:5601/api/fleet/outputs -H 'kbn-xsrf: true' -H 'Content-Type: application/json' \
+          -d '{"id":"es-tp3","name":"Elasticsearch TP3","type":"elasticsearch","hosts":["https://es01:9200","https://es02:9200"],"is_default":true,"is_default_monitoring":true,"config_yaml":"ssl.certificate_authorities: [\"/certs/ca/ca.crt\"]"}'
+        echo
+        echo 'URL du Fleet Server'
+        curl -s -u elastic:formation -X POST http://kibana:5601/api/fleet/fleet_server_hosts -H 'kbn-xsrf: true' -H 'Content-Type: application/json' \
+          -d '{"id":"fleet-server-tp3","name":"Fleet Server TP3","host_urls":["https://fleet-server:8220"],"is_default":true}'
+        echo
+        echo 'Politique Fleet Server'
+        curl -s -u elastic:formation -X POST 'http://kibana:5601/api/fleet/agent_policies?sys_monitoring=true' -H 'kbn-xsrf: true' -H 'Content-Type: application/json' \
+          -d '{"id":"fleet-server-policy","name":"Fleet Server Policy","namespace":"default","has_fleet_server":true,"monitoring_enabled":["logs","metrics"]}'
+        echo
+        echo 'Fleet est pret !'
+
+  # Elastic Agent en mode Fleet Server : il s'enrole lui-meme dans la
+  # politique "Fleet Server Policy" et ecoute sur https://fleet-server:8220
+  fleet-server:
+    depends_on:
+      fleet-setup:
+        condition: service_completed_successfully
+    image: docker.elastic.co/beats/elastic-agent:8.18.2
+    hostname: fleet-server
+    user: root
+    volumes:
+      - certs:/certs:ro
+    ports:
+      - 8220:8220
+    environment:
+      - FLEET_SERVER_ENABLE=1
+      - FLEET_SERVER_POLICY_ID=fleet-server-policy
+      - FLEET_SERVER_ELASTICSEARCH_HOST=https://es01:9200
+      - FLEET_SERVER_ELASTICSEARCH_CA=/certs/ca/ca.crt
+      - FLEET_SERVER_CERT=/certs/fleet-server/fleet-server.crt
+      - FLEET_SERVER_CERT_KEY=/certs/fleet-server/fleet-server.key
+      - FLEET_URL=https://fleet-server:8220
+      - FLEET_CA=/certs/ca/ca.crt
+      - KIBANA_FLEET_SETUP=1
+      - KIBANA_FLEET_HOST=http://kibana:5601
+      - KIBANA_FLEET_USERNAME=elastic
+      - KIBANA_FLEET_PASSWORD=formation
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=formation
+    mem_limit: 1g
 
 volumes:
   certs:
